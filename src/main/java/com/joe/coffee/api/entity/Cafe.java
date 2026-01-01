@@ -1,6 +1,6 @@
-package entity;
-import Enum.TypeCafe;
-import Enum.LabelCafe;
+package com.joe.coffee.api.entity;
+import com.joe.coffee.api.Enum.TypeCafe;
+import com.joe.coffee.api.Enum.LabelCafe;
 import jakarta.persistence.*;
 import lombok.Data;
 

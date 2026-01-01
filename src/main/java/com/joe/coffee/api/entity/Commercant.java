@@ -1,4 +1,4 @@
-package entity;
+package com.joe.coffee.api.entity;
 
 
 import jakarta.persistence.*;
@@ -55,7 +55,7 @@ public  class Commercant {
     /**
      * Liste des cafés vendus ou produits et ou les 2
      */
-    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "nomCafe", fetch = FetchType.LAZY)
     private List<Cafe> listeDesCafes;
 
 

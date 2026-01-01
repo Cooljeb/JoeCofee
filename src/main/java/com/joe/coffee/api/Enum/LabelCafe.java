@@ -1,4 +1,4 @@
-package Enum;
+package com.joe.coffee.api.Enum;
 
 /**
  * Label de fabrication de café

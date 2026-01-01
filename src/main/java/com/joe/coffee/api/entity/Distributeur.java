@@ -1,4 +1,4 @@
-package entity;
+package com.joe.coffee.api.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

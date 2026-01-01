@@ -1,4 +1,4 @@
-package Enum;
+package com.joe.coffee.api.Enum;
 
 /**
  * <b>Définit le type de café</b>

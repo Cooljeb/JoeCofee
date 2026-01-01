@@ -1,4 +1,4 @@
-package entity;
+package com.joe.coffee.api.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -35,7 +35,6 @@ public class Consommation {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cafe_id")
-    @Column(nullable = false)
     private  Cafe cafe;
 
     /**
@@ -43,6 +42,5 @@ public class Consommation {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "machine_a_cafe_id")
-    @Column(nullable = false)
     private MachineACafe machineACafe;
 }
