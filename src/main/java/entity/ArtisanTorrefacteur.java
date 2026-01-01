@@ -1,18 +1,23 @@
 package entity;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 /**
  * Classe de définition du commerçant de type ArtisantTorréfacteur
  * Ce dernier, en plus de vendre son café, le torréfie
  */
-public class ArtisanTorrefacteur extends Commerçant {
+@EqualsAndHashCode(callSuper = true)
+@Entity
+@Data
+@DiscriminatorValue("Artisan")
+public class ArtisanTorrefacteur extends Commercant {
 
     /**
      * Année de création de la structure de cet artisan
      */
-    private String anneeCréation;
+    private String anneeCreation;
 
-    @Override
-    public String getType() {
-        return "Je suis un artisant torréfacteur";
-    }
 }
