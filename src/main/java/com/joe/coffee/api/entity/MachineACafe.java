@@ -1,4 +1,4 @@
-package entity;
+package com.joe.coffee.api.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -42,7 +42,6 @@ public class MachineACafe {
     /**
      * marque de la machine
      */
-    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "marque_id")
     private Marque marque;
