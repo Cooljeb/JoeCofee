@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 /**
  * Une consommation  référence exactement un café et une machine

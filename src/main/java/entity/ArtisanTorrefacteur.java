@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 /**
  * Classe de définition du commerçant de type ArtisantTorréfacteur

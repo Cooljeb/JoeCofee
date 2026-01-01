@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 /**
  * Définition du commerçant de type Distributeur
