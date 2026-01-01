@@ -1,4 +1,7 @@
-package model;
+package bo;
+
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
@@ -7,35 +10,47 @@ import java.util.List;
  * Machine utilisée pour consommer le café. Elle est définie par une référence, un nom commercial,
  * une marque, une description et une image optionnelle.
  */
+@Entity
+@Data
 public class MachineACafe {
 
     /**
-     * Code de la machine
+     * id de la machine
      */
-    private Long codeMachine;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /**
      * nom Commercial de la machine à café
      */
+    @Column(nullable = false)
     private String nomCommercial;
 
     /**
      * référence commerciale de la machine
      */
+    @Column(nullable = false)
     private String referenceCommerciale;
 
     /**
      * Description de la machine
      */
+    @Column(nullable = false)
     private String description;
 
     /**
      * marque de la machine
      */
+    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "marque_id")
     private Marque marque;
 
     /**
      * Consommations réalisées avec cette machine
      */
+
+    @OneToMany(mappedBy = "machineACafe",fetch = FetchType.LAZY)
     private List<Consommation> listeConsommations;
 }
