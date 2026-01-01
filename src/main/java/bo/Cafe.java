@@ -36,14 +36,12 @@ public class Cafe {
      * Type du café
      */
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private TypeCafe typeCafe;
 
     /**
      * Label du café
      */
     @Column()
-    @Enumerated(EnumType.STRING)
     private LabelCafe labelCafe;
 
     /**
