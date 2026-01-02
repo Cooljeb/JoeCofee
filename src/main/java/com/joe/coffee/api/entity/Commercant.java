@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "typeCommercant")
-public  class Commercant {
+public  abstract class Commercant {
     /**
      * Indique le code du comemrçant (pour la bdd)
      */
