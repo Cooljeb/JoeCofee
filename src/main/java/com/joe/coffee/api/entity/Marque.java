@@ -17,7 +17,7 @@ public class Marque {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     /**
      * désignation de la marque
@@ -29,5 +29,5 @@ public class Marque {
      * Liste de machines de cette marque
      */
     @OneToMany(mappedBy = "marque",fetch = FetchType.LAZY)
-    private List<MachineACafe> listeMarchines;
+    private List<MachineACafe> listeMachines;
 }
