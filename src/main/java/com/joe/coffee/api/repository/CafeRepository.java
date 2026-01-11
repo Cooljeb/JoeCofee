@@ -17,4 +17,6 @@ public interface CafeRepository extends JpaRepository<Cafe, Long> {
 
     Optional<Cafe> findByDescriptionContainingIgnoreCase(String texte);
 
+    Optional<Cafe> findByLabelCafeIgnoreCase(String label);
+
 }
