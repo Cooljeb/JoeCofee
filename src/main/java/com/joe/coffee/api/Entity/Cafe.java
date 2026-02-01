@@ -1,4 +1,4 @@
-package com.joe.coffee.api.entity;
+package com.joe.coffee.api.Entity;
 import com.joe.coffee.api.Enum.TypeCafe;
 import com.joe.coffee.api.Enum.LabelCafe;
 import jakarta.persistence.*;
