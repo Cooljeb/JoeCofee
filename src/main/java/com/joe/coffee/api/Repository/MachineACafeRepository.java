@@ -1,6 +1,6 @@
-package com.joe.coffee.api.repository;
+package com.joe.coffee.api.Repository;
 
-import com.joe.coffee.api.entity.MachineACafe;
+import com.joe.coffee.api.Entity.MachineACafe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.joe.coffee.api.entity;
+package com.joe.coffee.api.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
