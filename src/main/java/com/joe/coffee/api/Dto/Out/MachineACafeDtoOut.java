@@ -1,7 +1,7 @@
-﻿package com.joe.coffee.api.Dto.Out;
+package com.joe.coffee.api.Dto.Out;
 
 /**
- * DTO de sortie d'une machine à Café
+ * DTO de sortie d'une machine à Cafe
  * @param id
  * @param nomCommercial
  * @param referenceCommerciale
