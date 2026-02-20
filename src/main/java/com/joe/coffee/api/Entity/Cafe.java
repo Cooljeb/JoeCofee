@@ -51,4 +51,12 @@ public class Cafe {
      */
     @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
     private List<Consommation> listeConsommations;
+
+    /**
+     * Lien vers le commerçant
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "commercant_id")
+    private Commercant commercant;
 }
