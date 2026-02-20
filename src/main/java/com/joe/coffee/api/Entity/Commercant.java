@@ -55,7 +55,7 @@ public  abstract class Commercant {
     /**
      * Liste des cafés vendus ou produits et ou les 2
      */
-    @OneToMany(mappedBy = "nomCafe", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "commercant", fetch = FetchType.LAZY)
     private List<Cafe> listeDesCafes;
 
 
