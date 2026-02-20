@@ -20,6 +20,6 @@ public interface MachineACafeRepository extends JpaRepository<MachineACafe, Long
 
     List<MachineACafe> findByDescriptionContainingIgnoreCase(String description);
 
-    List<MachineACafe> findByMarque(Long marque);
+    List<MachineACafe> findByMarqueId(Long idMarque);
 
 }
