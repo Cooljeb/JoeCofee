@@ -1,7 +1,7 @@
-package com.joe.coffee.api.Exceptions;
+package com.joe.coffee.api.Exception;
 
-import com.joe.coffee.api.Exceptions.CafeExceptions.CafeNotFoundException;
-import com.joe.coffee.api.Exceptions.CafeExceptions.DuplicateCafeException;
+import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
+import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

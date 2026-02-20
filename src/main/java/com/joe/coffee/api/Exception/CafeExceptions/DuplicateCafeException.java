@@ -1,4 +1,4 @@
-package com.joe.coffee.api.Exceptions.CafeExceptions;
+package com.joe.coffee.api.Exception.CafeExceptions;
 
 public class DuplicateCafeException  extends RuntimeException {
     public DuplicateCafeException(String nomCafe) {

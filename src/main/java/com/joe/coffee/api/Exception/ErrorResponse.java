@@ -1,4 +1,4 @@
-package com.joe.coffee.api.Exceptions;
+package com.joe.coffee.api.Exception;
 
 import java.time.LocalDateTime;
 
