@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI apiInfo() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Joe Coffee API")
-                        .version("1.0.0")
-                        .description("API REST pour le projet Joe Coffee"));
+                        .version("v1")
+                        .description("Documentation API Joe Coffee"));
     }
 }
