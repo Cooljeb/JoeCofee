@@ -1,4 +1,4 @@
-package com.joe.coffee.api.Exceptions.CafeExceptions;
+package com.joe.coffee.api.Exception.CafeExceptions;
 
 /**
  * Exception pour un café inconnu de la bdd
