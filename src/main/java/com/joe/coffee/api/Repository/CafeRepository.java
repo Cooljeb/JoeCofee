@@ -3,6 +3,7 @@ package com.joe.coffee.api.Repository;
 import com.joe.coffee.api.Entity.Cafe;
 import com.joe.coffee.api.Enum.LabelCafe;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,12 +13,11 @@ import java.util.Optional;
  */
 
 @Repository
-public interface CafeRepository extends JpaRepository<Cafe, Long> {
+public interface CafeRepository extends JpaRepository<Cafe, Long>, JpaSpecificationExecutor<Cafe> {
 
     Optional<Cafe> findByNomCafeIgnoreCase(String nom);
 
     Optional<Cafe> findByDescriptionContainingIgnoreCase(String texte);
 
-    Optional<Cafe> findByLabelCafe(LabelCafe labelCafe);;
 
 }

@@ -3,17 +3,22 @@ package com.joe.coffee.api.Service.Implementations;
 import com.joe.coffee.api.Dto.In.CafeDtoIn;
 import com.joe.coffee.api.Dto.Out.CafeDtoOut;
 import com.joe.coffee.api.Entity.Cafe;
+import com.joe.coffee.api.Enum.LabelCafe;
+import com.joe.coffee.api.Enum.TypeCafe;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
+import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
 import com.joe.coffee.api.Mapper.CafeMapper;
 import com.joe.coffee.api.Repository.CafeRepository;
 import com.joe.coffee.api.Service.Interfaces.CafeService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implémentation de CafeService
@@ -103,7 +108,62 @@ public class CafeServiceImpl implements CafeService {
                 });
     }
 
+    @Override
+    public List<CafeDtoOut> filterCafes(TypeCafe type, LabelCafe label) {
+        if (type == null && label == null) {
+            log.info("Aucun filtre fourni pour filterCafes");
+            throw  new EmptyCafeFilterException(); // ou tu peux lancer une exception si tu préfères
+        }
 
+        log.info("Filtrage des cafés par type={} et label={}", type, label);
+
+        // Construction de la spécification dynamique
+        Specification<Cafe> spec = Specification
+                .where(byType(type))
+                .and(byLabel(label));
+
+        // Exécution de la requête
+        List<CafeDtoOut> cafes = cafeRepository.findAll(spec)
+                .stream()
+                .map(cafeMapper::toDto)
+                .collect(Collectors.toList());
+
+        // Vérification du résultat
+        if (cafes.isEmpty()) {
+            log.warn("Aucun café trouvé pour type={} et label={}", type, label);
+            throw new CafeNotFoundException(
+                    "Aucun café trouvé avec les critères fournis."
+            );
+        }
+
+        log.info("{} café(s) trouvé(s)", cafes.size());
+
+        return cafes;
+    }
+
+    /**
+     * Spécification pour filtrer le type de café
+     * @param type
+     * @return la spécification du type de café trouvé
+     */
+    private Specification<Cafe> byType(TypeCafe type) {
+        return (root, query, cb) -> {
+            if (type == null) return null; // ignore si type non fourni
+            return cb.equal(root.get("typeCafe"), type);
+        };
+    }
+
+    /**
+     * Spécification pour filtrer  le lable de café
+     * @param label
+     * @return la spécification du label de café trouvé
+     */
+    private Specification<Cafe> byLabel(LabelCafe label) {
+        return (root, query, cb) -> {
+            if (label == null) return null; // ignore si label non fourni
+            return cb.equal(root.get("labelCafe"), label);
+        };
+    }
 
 
 }
