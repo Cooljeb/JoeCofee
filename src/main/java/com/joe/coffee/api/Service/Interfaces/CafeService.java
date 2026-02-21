@@ -2,6 +2,8 @@ package com.joe.coffee.api.Service.Interfaces;
 
 import com.joe.coffee.api.Dto.In.CafeDtoIn;
 import com.joe.coffee.api.Dto.Out.CafeDtoOut;
+import com.joe.coffee.api.Enum.LabelCafe;
+import com.joe.coffee.api.Enum.TypeCafe;
 
 import java.util.List;
 
@@ -43,6 +45,14 @@ public interface CafeService {
      * @return le café correspondant au DTO de sortie
      */
     CafeDtoOut getCafeById(Long id);
+
+    /**
+     * permet de filtrer une recherche sur un type de café ou un label , si présents
+     * @param type du café
+     * @param label du café
+     * @return spécificaitons précisées dans le Repository
+     */
+    List<CafeDtoOut> filterCafes(TypeCafe type, LabelCafe label);
 
 
 }

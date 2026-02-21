@@ -2,6 +2,8 @@ package com.joe.coffee.api.Controller;
 
 import com.joe.coffee.api.Dto.In.CafeDtoIn;
 import com.joe.coffee.api.Dto.Out.CafeDtoOut;
+import com.joe.coffee.api.Enum.LabelCafe;
+import com.joe.coffee.api.Enum.TypeCafe;
 import com.joe.coffee.api.Service.Interfaces.CafeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -148,5 +150,25 @@ public class CafeController {
         log.info("Suppression du café {}", id);
         cafeService.deleteCafe(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+            summary = "Filtrer les cafés",
+            description = "Filtre les cafés par type et/ou label. Au moins un filtre doit être fourni."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste des cafés correspondant aux critères"),
+            @ApiResponse(responseCode = "400", description = "Aucun filtre fourni"),
+            @ApiResponse(responseCode = "404", description = "Aucun café trouvé avec les critères fournis")
+    })
+    @GetMapping("/filter")
+    public List<CafeDtoOut> filter(
+            @Parameter(description = "Type de café (ex: ESPRESSO, FILTRE)")
+            @RequestParam(required = false) TypeCafe type,
+
+            @Parameter(description = "Label du café (ex: BIO, FAIR_TRADE)")
+            @RequestParam(required = false) LabelCafe label) {
+
+        return cafeService.filterCafes(type, label);
     }
 }

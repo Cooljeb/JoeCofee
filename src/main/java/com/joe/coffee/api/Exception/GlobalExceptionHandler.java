@@ -2,7 +2,7 @@ package com.joe.coffee.api.Exception;
 
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
-import io.swagger.v3.oas.annotations.Hidden;
+import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,6 +29,17 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EmptyCafeFilterException.class)
+    public ResponseEntity<ErrorResponse> handleEmptyCafeFilter(EmptyCafeFilterException ex) {
+        log.warn("Erreur 400 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateCafeException.class)
