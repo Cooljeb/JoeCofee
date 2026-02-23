@@ -8,6 +8,6 @@ import jakarta.validation.constraints.NotBlank;
  */
 public record MarqueDtoIn(
         @NotBlank
-        String Marque
+        String marque
 ) {
 }
