@@ -1,11 +1,12 @@
 package com.joe.coffee.api.Exception;
 
-import com.joe.coffee.api.Entity.Marque;
+import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.ArtisanTorrefacteurNotFoundException;
+import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DuplicateArtisanTorrefacteurException;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
-import com.joe.coffee.api.Exception.MarqueException.DuplicateMarqueException;
-import com.joe.coffee.api.Exception.MarqueException.MarqueNotFoundException;
+import com.joe.coffee.api.Exception.MarqueExceptions.DuplicateMarqueException;
+import com.joe.coffee.api.Exception.MarqueExceptions.MarqueNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -73,6 +74,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateMarqueException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateMarque(DuplicateMarqueException ex) {
+        log.warn("Erreur 409 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ArtisanTorrefacteurNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleArtisanTorrefacteurNotFound(ArtisanTorrefacteurNotFoundException ex) {
+        log.warn("Erreur 404 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateArtisanTorrefacteurException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateArtisanTorrefacteur(DuplicateArtisanTorrefacteurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),

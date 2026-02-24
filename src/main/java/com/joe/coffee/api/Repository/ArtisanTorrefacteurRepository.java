@@ -15,5 +15,4 @@ public interface ArtisanTorrefacteurRepository extends JpaRepository<ArtisanTorr
 
     Optional<ArtisanTorrefacteur> findByNomIgnoreCase(String nom);
 
-    List<ArtisanTorrefacteur> findByAnneeCreation(String anneeCreation);
 }

@@ -1,4 +1,4 @@
-package com.joe.coffee.api.Exception.MarqueException;
+package com.joe.coffee.api.Exception.MarqueExceptions;
 
 public class MarqueNotFoundException extends RuntimeException {
 
