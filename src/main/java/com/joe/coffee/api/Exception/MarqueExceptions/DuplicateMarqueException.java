@@ -1,4 +1,4 @@
-package com.joe.coffee.api.Exception.MarqueException;
+package com.joe.coffee.api.Exception.MarqueExceptions;
 
 public class DuplicateMarqueException extends RuntimeException {
     public DuplicateMarqueException(String marque) {

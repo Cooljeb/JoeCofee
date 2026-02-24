@@ -3,8 +3,8 @@ package com.joe.coffee.api.Service.Implementations;
 import com.joe.coffee.api.Dto.In.MarqueDtoIn;
 import com.joe.coffee.api.Dto.Out.MarqueDtoOut;
 import com.joe.coffee.api.Entity.Marque;
-import com.joe.coffee.api.Exception.MarqueException.DuplicateMarqueException;
-import com.joe.coffee.api.Exception.MarqueException.MarqueNotFoundException;
+import com.joe.coffee.api.Exception.MarqueExceptions.DuplicateMarqueException;
+import com.joe.coffee.api.Exception.MarqueExceptions.MarqueNotFoundException;
 import com.joe.coffee.api.Mapper.MarqueMapper;
 import com.joe.coffee.api.Repository.MarqueRepository;
 import com.joe.coffee.api.Service.Interfaces.MarqueService;
@@ -51,7 +51,7 @@ public class MarqueServiceImpl implements MarqueService {
     @Override
     public List<MarqueDtoOut> getAllMarques() {
 
-        log.info("Récupération de tous les cafés");
+        log.info("Récupération de toutes les marques");
         return marqueRepository.findAll().stream()
                 .map(marqueMapper::toDto)
                 .toList();
