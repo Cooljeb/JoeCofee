@@ -49,6 +49,6 @@ public interface ArtisanTorrefacteurService {
      * Méthode de suppression d'un AT
      * @param id de la marque
      */
-    void  deleteArtisanTorrefacteurById(Long id);
+    void  deleteArtisanTorrefacteur(Long id);
 
 }
