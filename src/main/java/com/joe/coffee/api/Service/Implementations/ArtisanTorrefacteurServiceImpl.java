@@ -67,7 +67,7 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
 
     @Override
     public ArtisanTorrefacteurDtoOut getArtisanTorrefacteurByName(String name) {
-        log.info("Recherche de la l'AT avec id {}", name);
+        log.info("Recherche de l'AT avec le nom {}", name);
 
         return artisanTorrefacteurRepository.findByNomIgnoreCase(name)
                 .map(artisanTorrefacteurMapper::toDto)
@@ -92,13 +92,13 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
 
         // Sauvegarde les modifications
         ArtisanTorrefacteur updatedArtisanTorrefacteur = artisanTorrefacteurRepository.save(existingArtisanTorrefacteur);
-        log.info("Marque avec id {} mise à jour", updatedArtisanTorrefacteur.getId());
+        log.info("AT avec id {} mise à jour", updatedArtisanTorrefacteur.getId());
         // Retourne DTO OUT
         return artisanTorrefacteurMapper.toDto(updatedArtisanTorrefacteur);
     }
 
     @Override
-    public void deleteArtisanTorrefacteurById(Long id) {
+    public void deleteArtisanTorrefacteur(Long id) {
 
         log.info("Suppression de l'AT avec id {}", id);
 

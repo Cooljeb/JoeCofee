@@ -9,7 +9,7 @@ public class ArtisanTorrefacteurNotFoundException extends RuntimeException {
     }
     public ArtisanTorrefacteurNotFoundException(String at) {
 
-        super("Artisan Torréfacteur avec l'id " + at + " introuvable.");
+        super("Artisan Torréfacteur avec le nom " + at + " introuvable.");
 
     }
 }
