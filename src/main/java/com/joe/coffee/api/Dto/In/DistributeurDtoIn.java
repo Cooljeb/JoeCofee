@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 /**
  * DTO d'entrée d'un distributeur
  */
+@Schema(description = "Représentation détaillée d'un distributeur pour les données entrantes de l'API")
 public record DistributeurDtoIn(
 
         @NotBlank(message = "Le nom du distributeur est obligatoire")
