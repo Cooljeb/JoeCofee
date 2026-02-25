@@ -46,19 +46,19 @@ WHERE NOT EXISTS(SELECT 1 FROM cafe WHERE nom_cafe='Amazonia Forte');
 
 -- Table commercant
 INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-SELECT 'Commercant', '12 rue du Café, Paris', 'contact@cafes-paris.fr', 'Cafés de Paris', 'https://cafes-paris.fr', '0102030405', NULL, NULL
+SELECT 'Commercant', '12 rue du Café, Paris', 'contact@cafes-paris.fr', 'Cafés de Paris', 'https://www.cafes-paris.fr', '0102030405', NULL, NULL
 WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Cafés de Paris');
 
 INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-SELECT 'Artisan', '5 place du Marché, Lyon', 'artisan@lyon-cafe.fr', 'Lyon Torréfaction', 'https://lyon-cafe.fr', '0405060708', '1998', NULL
+SELECT 'Artisan', '5 place du Marché, Lyon', 'artisan@lyon-cafe.fr', 'Lyon Torréfaction', 'https://www.lyon-cafe.fr', '0405060708', '1998', NULL
 WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Lyon Torréfaction');
 
 INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-SELECT 'Distributeur', 'Zone industrielle, Lille', 'contact@distrib-cafe.fr', 'Distrib Café Nord', 'https://distrib-cafe.fr', '0304050607', NULL, 'Groupe Café Europe'
+SELECT 'Distributeur', 'Zone industrielle, Lille', 'contact@distrib-cafe.fr', 'Distrib Café Nord', 'https://www.distrib-cafe.fr', '0304050607', NULL, 'Groupe Café Europe'
 WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Distrib Café Nord');
 
 INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-SELECT 'Artisan', '8 avenue des Arômes, Bordeaux', 'bonjour@bordeaux-cafe.fr', 'Bordeaux Arômes', 'https://bordeaux-cafe.fr', '0506070809', '2005', NULL
+SELECT 'Artisan', '8 avenue des Arômes, Bordeaux', 'bonjour@bordeaux-cafe.fr', 'Bordeaux Arômes', 'https://www.bordeaux-cafe.fr', '0506070809', '2005', NULL
 WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Bordeaux Arômes');
 
 -- Table consommation

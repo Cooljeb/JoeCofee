@@ -35,3 +35,7 @@ build/
 ### Log ###
 logs/
 *.log
+
+### data ###
+data/
+*.db
