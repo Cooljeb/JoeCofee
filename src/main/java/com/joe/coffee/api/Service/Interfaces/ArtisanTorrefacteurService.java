@@ -6,7 +6,7 @@ import com.joe.coffee.api.Dto.Out.ArtisanTorrefacteurDtoOut;
 import java.util.List;
 
 /**
- * Interface du service des marques
+ * Interface du service des Artisan Torrefacteur
  */
 public interface ArtisanTorrefacteurService {
 
