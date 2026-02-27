@@ -5,6 +5,8 @@ import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DuplicateArtis
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
+import com.joe.coffee.api.Exception.DistributeurExceptions.DistributeurNotFoundException;
+import com.joe.coffee.api.Exception.DistributeurExceptions.DuplicateDistributeurException;
 import com.joe.coffee.api.Exception.MarqueExceptions.DuplicateMarqueException;
 import com.joe.coffee.api.Exception.MarqueExceptions.MarqueNotFoundException;
 import org.slf4j.Logger;
@@ -96,6 +98,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateArtisanTorrefacteurException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateArtisanTorrefacteur(DuplicateArtisanTorrefacteurException ex) {
+        log.warn("Erreur 409 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DistributeurNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleDistributeurNotFound(DistributeurNotFoundException ex) {
+        log.warn("Erreur 404 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateDistributeurException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateDistributeur(DuplicateDistributeurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),
