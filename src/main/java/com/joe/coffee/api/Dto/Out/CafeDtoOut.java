@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @param id
  * @param nomCafe
  * @param description
- * @param intensite
  * @param typeCafe
  * @param labelCafe
  */
@@ -24,9 +23,6 @@ public record CafeDtoOut(
 
         @Schema(description = "Description du café", example = "Un café doux aux notes de chocolat et noisette")
         String description,
-
-        @Schema(description = "Intensité du café (1 à 10)", example = "6", minimum = "1", maximum = "10")
-        Integer intensite,
 
         @Schema(description = "type du café", example = "ARABICA")
         TypeCafe typeCafe,

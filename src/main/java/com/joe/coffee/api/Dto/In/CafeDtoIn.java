@@ -9,7 +9,6 @@ import jakarta.validation.constraints.*;
  * Record correspondant au DTO d'entrée d'un café
  * @param nomCafe
  * @param description
- * @param intensite
  * @param typeCafe
  * @param labelCafe
  */
@@ -34,17 +33,6 @@ public record CafeDtoIn(
                 maxLength = 255
         )
         String description,
-
-        @NotNull(message = "L'intensité est obligatoire")
-        @Min(value = 1, message = "L'intensité minimale est 1")
-        @Max(value = 10, message = "L'intensité maximale est 10")
-        @Schema(
-                description = "Intensité du café (1 à 10)",
-                example = "6",
-                minimum = "1",
-                maximum = "10"
-        )
-        Integer intensite,
 
         @NotNull(message = "Le type de café est obligatoire")
         @Schema(
