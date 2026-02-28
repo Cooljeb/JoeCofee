@@ -1,63 +1,87 @@
--- src/main/resources/db/migration/V1__base_data.sql
-
-BEGIN TRANSACTION;
+-- V1__base_data.sql
+-- Refacto inserts pour Flyway / SQLite
 
 -- Table marque
-INSERT OR IGNORE INTO marque (marque) VALUES ('DeLonghi');
-INSERT OR IGNORE INTO marque (marque) VALUES ('Philips');
-INSERT OR IGNORE INTO marque (marque) VALUES ('Saeco');
-INSERT OR IGNORE INTO marque (marque) VALUES ('Krups');
+INSERT INTO marque (marque)
+SELECT 'DeLonghi' WHERE NOT EXISTS(SELECT 1 FROM marque WHERE marque='DeLonghi');
+
+INSERT INTO marque (marque)
+SELECT 'Philips' WHERE NOT EXISTS(SELECT 1 FROM marque WHERE marque='Philips');
+
+INSERT INTO marque (marque)
+SELECT 'Saeco' WHERE NOT EXISTS(SELECT 1 FROM marque WHERE marque='Saeco');
+
+INSERT INTO marque (marque)
+SELECT 'Krups' WHERE NOT EXISTS(SELECT 1 FROM marque WHERE marque='Krups');
 
 -- Table machineacafe
-INSERT OR IGNORE INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
-VALUES ('Machine expresso automatique avec broyeur', 'Magnifica S', 'ECAM22.110', 1);
+INSERT INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
+SELECT 'Machine expresso automatique avec broyeur', 'Magnifica S', 'ECAM22.110', 1
+    WHERE NOT EXISTS(SELECT 1 FROM machineacafe WHERE nom_commercial='Magnifica S');
 
-INSERT OR IGNORE INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
-VALUES ('Machine expresso automatique compacte', 'Series 2200', 'EP2220', 2);
+INSERT INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
+SELECT 'Machine expresso automatique compacte', 'Series 2200', 'EP2220', 2
+    WHERE NOT EXISTS(SELECT 1 FROM machineacafe WHERE nom_commercial='Series 2200');
 
-INSERT OR IGNORE INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
-VALUES ('Machine expresso professionnelle', 'Royal OTC', 'SUP016REU', 3);
+INSERT INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
+SELECT 'Machine expresso professionnelle', 'Royal OTC', 'SUP016REU', 3
+    WHERE NOT EXISTS(SELECT 1 FROM machineacafe WHERE nom_commercial='Royal OTC');
 
-INSERT OR IGNORE INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
-VALUES ('Machine expresso domestique', 'Essential', 'XP3208', 4);
+INSERT INTO machineacafe (description, nom_commercial, reference_commerciale, marque_id)
+SELECT 'Machine expresso domestique', 'Essential', 'XP3208', 4
+    WHERE NOT EXISTS(SELECT 1 FROM machineacafe WHERE nom_commercial='Essential');
 
 -- Table cafe
-INSERT OR IGNORE INTO cafe (description, label_cafe, nom_cafe, type_cafe)
-VALUES ('Café doux et aromatique d’Amérique du Sud', 'BIO', 'Colombia Supremo', 'ARABICA');
+INSERT INTO cafe (description, label_cafe, nom_cafe, type_cafe, commercant_id)
+SELECT 'Café doux et aromatique d’Amérique du Sud', 'BIO', 'Colombia Supremo', 'ARABICA','2'
+    WHERE NOT EXISTS(SELECT 1 FROM cafe WHERE nom_cafe='Colombia Supremo');
 
-INSERT OR IGNORE INTO cafe (description, label_cafe, nom_cafe, type_cafe)
-VALUES ('Café corsé et puissant', 'FAIR_TRADE', 'Robusta Vietnam', 'ROBUSTA');
+INSERT INTO cafe (description, label_cafe, nom_cafe, type_cafe, commercant_id)
+SELECT 'Café corsé et puissant', 'FAIR_TRADE', 'Robusta Vietnam', 'ROBUSTA','2'
+    WHERE NOT EXISTS(SELECT 1 FROM cafe WHERE nom_cafe='Robusta Vietnam');
 
-INSERT OR IGNORE INTO cafe (description, label_cafe, nom_cafe, type_cafe)
-VALUES ('Assemblage équilibré pour expresso', 'BIO_FAIR_TRADE', 'Espresso Italiano', 'BLEND');
+INSERT INTO cafe (description, label_cafe, nom_cafe, type_cafe, commercant_id)
+SELECT 'Assemblage équilibré pour expresso', 'BIO_FAIR_TRADE', 'Espresso Italiano', 'BLEND','5'
+    WHERE NOT EXISTS(SELECT 1 FROM cafe WHERE nom_cafe='Espresso Italiano');
 
-INSERT OR IGNORE INTO cafe (description, label_cafe, nom_cafe, type_cafe)
-VALUES ('Café intense aux notes boisées', 'RAINFOREST_ALLIANCE', 'Amazonia Forte', 'ARABICA');
+INSERT INTO cafe (description, label_cafe, nom_cafe, type_cafe, commercant_id)
+SELECT 'Café intense aux notes boisées', 'RAINFOREST_ALLIANCE', 'Amazonia Forte', 'ARABICA','5'
+    WHERE NOT EXISTS(SELECT 1 FROM cafe WHERE nom_cafe='Amazonia Forte');
 
 -- Table commercant
-INSERT OR IGNORE INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-VALUES ('Commercant', '12 rue du Café, Paris', 'contact@cafes-paris.fr', 'Cafés de Paris', 'https://www.cafes-paris.fr', '0102030405', NULL, NULL);
+INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
+SELECT 'Commercant', '12 rue du Café, Paris', 'contact@cafes-paris.fr', 'Cafés de Paris', 'https://www.cafes-paris.fr', '0102030405', NULL, NULL
+    WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Cafés de Paris');
 
-INSERT OR IGNORE INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-VALUES ('Artisan', '5 place du Marché, Lyon', 'artisan@lyon-cafe.fr', 'Lyon Torréfaction', 'https://www.lyon-cafe.fr', '0405060708', '1998', NULL);
+INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
+SELECT 'Artisan', '5 place du Marché, Lyon', 'artisan@lyon-cafe.fr', 'Lyon Torréfaction', 'https://www.lyon-cafe.fr', '0405060708', '1998', NULL
+    WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Lyon Torréfaction');
 
-INSERT OR IGNORE INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-VALUES ('Distributeur', 'Zone industrielle, Lille', 'contact@distrib-cafe.fr', 'Distrib Café Nord', 'https://www.distrib-cafe.fr', '0304050607', NULL, 'Groupe Café Europe');
+INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
+SELECT 'Distributeur', 'Zone industrielle, Lille', 'contact@distrib-cafe.fr', 'Distrib Café Nord', 'https://www.distrib-cafe.fr', '0304050607', NULL, 'Groupe Café Europe'
+    WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Distrib Café Nord');
 
-INSERT OR IGNORE INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
-VALUES ('Artisan', '8 avenue des Arômes, Bordeaux', 'bonjour@bordeaux-cafe.fr', 'Bordeaux Arômes', 'https://www.bordeaux-cafe.fr', '0506070809', '2005', NULL);
+INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
+SELECT 'Artisan', '8 avenue des Arômes, Bordeaux', 'bonjour@bordeaux-cafe.fr', 'Bordeaux Arômes', 'https://www.bordeaux-cafe.fr', '0506070809', '2005', NULL
+    WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Bordeaux Arômes');
+
+INSERT INTO commercant (type_commercant, adresse, email, nom, site_internet, telephone, annee_creation, nom_du_groupe_de_distribution)
+SELECT 'Artisan', '44 route de la Beaujoire, NANTES', 'contact@joecoffee.fr', 'Joe Coffee', 'https://www.joecoffe.fr', '0102030404', '2020', NULL
+    WHERE NOT EXISTS(SELECT 1 FROM commercant WHERE nom='Joe Coffee');
 
 -- Table consommation
-INSERT OR IGNORE INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
-VALUES (3, 4, 1, 1);
+INSERT INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
+SELECT 3, 4, 1, 1
+    WHERE NOT EXISTS(SELECT 1 FROM consommation WHERE cafe_id=1 AND machine_a_cafe_id=1);
 
-INSERT OR IGNORE INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
-VALUES (2, 5, 2, 2);
+INSERT INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
+SELECT 2, 5, 2, 2
+    WHERE NOT EXISTS(SELECT 1 FROM consommation WHERE cafe_id=2 AND machine_a_cafe_id=2);
 
-INSERT OR IGNORE INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
-VALUES (4, 3, 3, 3);
+INSERT INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
+SELECT 4, 3, 3, 3
+    WHERE NOT EXISTS(SELECT 1 FROM consommation WHERE cafe_id=3 AND machine_a_cafe_id=3);
 
-INSERT OR IGNORE INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
-VALUES (5, 5, 4, 4);
-
-COMMIT;
+INSERT INTO consommation (reglage_broyeur, reglage_intensite, cafe_id, machine_a_cafe_id)
+SELECT 5, 5, 4, 4
+    WHERE NOT EXISTS(SELECT 1 FROM consommation WHERE cafe_id=4 AND machine_a_cafe_id=4);
