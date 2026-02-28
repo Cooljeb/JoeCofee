@@ -171,4 +171,20 @@ public class CafeController {
 
         return cafeService.filterCafes(type, label);
     }
+
+    @Operation(summary = "Récupère tous les cafés pour un commerçant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cafés trouvés",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CafeDtoOut.class))),
+            @ApiResponse(responseCode = "404", description = "Aucun café trouvé pour ce commerçant",
+                    content = @Content)
+    })
+    @GetMapping("/by-commercant/{commercantId}")
+    public ResponseEntity<List<CafeDtoOut>> getCafesByCommercant(
+            @PathVariable("commercantId") Long commercantId) {
+        List<CafeDtoOut> cafes = cafeService.getCafesByCommercantId(commercantId);
+        return ResponseEntity.ok(cafes);
+    }
+
 }

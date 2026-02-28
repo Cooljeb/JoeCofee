@@ -54,5 +54,11 @@ public interface CafeService {
      */
     List<CafeDtoOut> filterCafes(TypeCafe type, LabelCafe label);
 
+    /**
+     * Recherche d'un café par l'id du commerçant
+     * @param commercantId
+     * @return le café produit ou distribué par le commerçant concerné
+     */
+    List<CafeDtoOut> getCafesByCommercantId(Long commercantId);
 
 }

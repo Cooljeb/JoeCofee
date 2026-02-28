@@ -28,6 +28,16 @@ public record CafeDtoOut(
         TypeCafe typeCafe,
 
         @Schema(description = "label du café", example = "BIO")
-        LabelCafe labelCafe
+        LabelCafe labelCafe,
+
+        @Schema(description = "Identifiant du commerçant qui vend le café", example = "2")
+        Long commercant,
+
+        @Schema(description = "Nom du commerçant qui vend le café", example = "Lyon Torréfaction")
+        String commercantNom,
+
+        @Schema(description = "type du commerçant qui produit et ou vend le café", example = "Artisan")
+        String commercantType
+
 ) {
 }

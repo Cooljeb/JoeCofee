@@ -5,6 +5,7 @@ import com.joe.coffee.api.Dto.Out.CafeDtoOut;
 import com.joe.coffee.api.Entity.Cafe;
 import com.joe.coffee.api.Enum.LabelCafe;
 import com.joe.coffee.api.Enum.TypeCafe;
+import com.joe.coffee.api.Exception.CafeExceptions.CafeCommercantNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
@@ -139,6 +140,22 @@ public class CafeServiceImpl implements CafeService {
         log.info("{} café(s) trouvé(s)", cafes.size());
 
         return cafes;
+    }
+
+    @Override
+    public List<CafeDtoOut> getCafesByCommercantId(Long commercantId) {
+        log.info("Récupération des cafés pour le commerçant avec id {}", commercantId);
+
+        List<Cafe> cafes = cafeRepository.findByCommercantId(commercantId);
+
+        if (cafes.isEmpty()) {
+            log.warn("Aucun café trouvé pour le commerçant avec id {}", commercantId);
+            throw new CafeCommercantNotFoundException(commercantId);
+        }
+
+        return cafes.stream()
+                .map(cafeMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     /**

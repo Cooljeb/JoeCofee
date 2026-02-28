@@ -2,6 +2,7 @@ package com.joe.coffee.api.Exception;
 
 import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.ArtisanTorrefacteurNotFoundException;
 import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DuplicateArtisanTorrefacteurException;
+import com.joe.coffee.api.Exception.CafeExceptions.CafeCommercantNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
@@ -30,6 +31,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CafeNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCafeNotFound(CafeNotFoundException ex) {
+        log.warn("Erreur 404 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CafeCommercantNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCafeCommercantNotFound(CafeCommercantNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
