@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,6 +19,8 @@ public interface CafeRepository extends JpaRepository<Cafe, Long>, JpaSpecificat
     Optional<Cafe> findByNomCafeIgnoreCase(String nom);
 
     Optional<Cafe> findByDescriptionContainingIgnoreCase(String texte);
+
+    List<Cafe> findByCommercantId(Long commercantId);
 
 
 }
