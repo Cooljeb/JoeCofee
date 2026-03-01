@@ -16,7 +16,7 @@ public class Consommation {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codeConsommation;
+    private Integer codeConsommation;
 
     /**
      * Réglage broyeur

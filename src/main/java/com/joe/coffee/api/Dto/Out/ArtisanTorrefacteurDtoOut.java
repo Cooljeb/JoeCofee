@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record ArtisanTorrefacteurDtoOut(
 
         @Schema(description = "Identifiant unique d'un AT'", example = "2")
-        Long id,
+        Integer id,
 
         @Schema(description = "Nom de l'Artisan", example = "Lyon Torréfaction")
         String nom,

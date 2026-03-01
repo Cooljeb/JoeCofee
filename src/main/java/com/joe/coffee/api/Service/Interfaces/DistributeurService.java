@@ -31,7 +31,7 @@ public interface DistributeurService {
      * @param id distributeur
      * @return le distributeur depuis son id
      */
-    DistributeurDtoOut getDistributeurById(Long id);
+    DistributeurDtoOut getDistributeurById(Integer id);
 
     /**
      * Méthode de recherche d'un distributeur depuis son nom
@@ -48,13 +48,13 @@ public interface DistributeurService {
      * @param DistributeurIn DTO d'entrée
      * @return DO de sortie
      */
-    DistributeurDtoOut updateDistributeur(Long id, DistributeurDtoIn DistributeurIn);
+    DistributeurDtoOut updateDistributeur(Integer id, DistributeurDtoIn DistributeurIn);
 
     /**
      * Méthode de suppression d'un distributeur
      *
      * @param id de la marque
      */
-    void deleteDistributeur(Long id);
+    void deleteDistributeur(Integer id);
 
 }

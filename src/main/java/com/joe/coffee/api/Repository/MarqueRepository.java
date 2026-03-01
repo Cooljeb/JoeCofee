@@ -10,7 +10,7 @@ import java.util.Optional;
  * Repository pour rechercher les informations d'une marque
  */
 @Repository
-public interface MarqueRepository  extends JpaRepository<Marque, Long> {
+public interface MarqueRepository  extends JpaRepository<Marque, Integer> {
 
     Optional<Marque> findByMarqueIgnoreCase(String marque);
 

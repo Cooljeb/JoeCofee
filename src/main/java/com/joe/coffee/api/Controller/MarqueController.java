@@ -72,7 +72,7 @@ public class MarqueController {
     @GetMapping("/{id}")
     public ResponseEntity<MarqueDtoOut> getMarqueById(
             @Parameter(description = "Identifiant de la marque", example = "1") //swagger
-            @PathVariable Long id) {
+            @PathVariable Integer id) {
         log.info("Récupération de la marque avec id {}", id);
         return ResponseEntity.ok(marqueService.getMarqueById(id));
     }
@@ -147,7 +147,7 @@ public class MarqueController {
     @PutMapping("/{id}")
     public ResponseEntity<MarqueDtoOut> updateCafe(
             @Parameter(description = "Identifiant de la marque à modifier", example = "1")
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @Valid
             @RequestBody
             @Parameter(description = "DTO contenant les nouvelles informations de la marque")
@@ -168,7 +168,7 @@ public class MarqueController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMarque(
             @Parameter(description = "Identifiant de la marque à supprimer", example = "1")
-            @PathVariable Long id) {
+            @PathVariable Integer id) {
         log.info("Suppression de la marque {}", id);
         marqueService.deleteMarque(id);
         return ResponseEntity.noContent().build();

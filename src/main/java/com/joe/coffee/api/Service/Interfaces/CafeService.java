@@ -25,13 +25,13 @@ public interface CafeService {
      * @param cafeIn Dto d'entrée
      * @return DTO de sortie
      */
-    CafeDtoOut updateCafe(Long id, CafeDtoIn cafeIn);
+    CafeDtoOut updateCafe(Integer id, CafeDtoIn cafeIn);
 
     /**
      * Suppression d'un café à aprtir de son idée
      * @param id du café concerné
      */
-    void deleteCafe(Long id);
+    void deleteCafe(Integer id);
 
     /**
      * Affiche tout les cafés présents dans la bdd
@@ -44,7 +44,7 @@ public interface CafeService {
      * @param id
      * @return le café correspondant au DTO de sortie
      */
-    CafeDtoOut getCafeById(Long id);
+    CafeDtoOut getCafeById(Integer id);
 
     /**
      * permet de filtrer une recherche sur un type de café ou un label , si présents
@@ -59,6 +59,6 @@ public interface CafeService {
      * @param commercantId
      * @return le café produit ou distribué par le commerçant concerné
      */
-    List<CafeDtoOut> getCafesByCommercantId(Long commercantId);
+    List<CafeDtoOut> getCafesByCommercantId(Integer commercantId);
 
 }

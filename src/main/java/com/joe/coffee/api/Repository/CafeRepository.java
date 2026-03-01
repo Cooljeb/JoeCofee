@@ -14,13 +14,13 @@ import java.util.Optional;
  */
 
 @Repository
-public interface CafeRepository extends JpaRepository<Cafe, Long>, JpaSpecificationExecutor<Cafe> {
+public interface CafeRepository extends JpaRepository<Cafe, Integer>, JpaSpecificationExecutor<Cafe> {
 
     Optional<Cafe> findByNomCafeIgnoreCase(String nom);
 
     Optional<Cafe> findByDescriptionContainingIgnoreCase(String texte);
 
-    List<Cafe> findByCommercantId(Long commercantId);
+    List<Cafe> findByCommercantId(Integer commercantId);
 
 
 }

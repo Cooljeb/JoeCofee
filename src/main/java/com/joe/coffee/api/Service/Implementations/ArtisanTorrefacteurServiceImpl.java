@@ -54,7 +54,7 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
     }
 
     @Override
-    public ArtisanTorrefacteurDtoOut getArtisanTorrefacteurById(Long id) {
+    public ArtisanTorrefacteurDtoOut getArtisanTorrefacteurById(Integer id) {
         log.info("Récupération de l'AT avec id {}", id);
 
         return artisanTorrefacteurRepository.findById(id)
@@ -78,7 +78,7 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
     }
 
     @Override
-    public ArtisanTorrefacteurDtoOut updateArtisanTorrefacteur(Long id, ArtisanTorrefacteurDtoIn artisanTorrefacteurIn) {
+    public ArtisanTorrefacteurDtoOut updateArtisanTorrefacteur(Integer id, ArtisanTorrefacteurDtoIn artisanTorrefacteurIn) {
         log.info("Mise à jour de la marque avec id {}", id);
         // Récupère l'AT existant ou lance exception si introuvable
         ArtisanTorrefacteur existingArtisanTorrefacteur = artisanTorrefacteurRepository.findById(id)
@@ -98,7 +98,7 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
     }
 
     @Override
-    public void deleteArtisanTorrefacteur(Long id) {
+    public void deleteArtisanTorrefacteur(Integer id) {
 
         log.info("Suppression de l'AT avec id {}", id);
 

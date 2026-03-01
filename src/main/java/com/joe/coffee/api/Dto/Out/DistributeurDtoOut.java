@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record DistributeurDtoOut(
 
         @Schema(description = "Identifiant unique du distributeur", example = "1")
-        Long id,
+        Integer id,
 
         @Schema(description = "Nom du distributeur", example = "Cafés de Paris")
         String nom,

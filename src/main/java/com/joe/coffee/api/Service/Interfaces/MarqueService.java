@@ -28,7 +28,7 @@ public interface MarqueService {
      * @param id de la marque
      * @return la marque depuis son id
      */
-    MarqueDtoOut getMarqueById(Long id);
+    MarqueDtoOut getMarqueById(Integer id);
 
     /**
      * Méthode de mise à jour d'une marque
@@ -36,7 +36,7 @@ public interface MarqueService {
      * @param marqueIn Dto d'entrée
      * @return DTO de sortie
      */
-    MarqueDtoOut updateMarque(Long id, MarqueDtoIn marqueIn);
+    MarqueDtoOut updateMarque(Integer id, MarqueDtoIn marqueIn);
 
     /**
      * Méthode de recherche d'une marque depuis son nom
@@ -50,5 +50,5 @@ public interface MarqueService {
      * Méthode de suppression d'une marque
      * @param id de la marque
      */
-    void  deleteMarque(Long id);
+    void  deleteMarque(Integer id);
 }

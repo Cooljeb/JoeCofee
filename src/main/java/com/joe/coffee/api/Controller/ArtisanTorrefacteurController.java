@@ -72,7 +72,7 @@ public class ArtisanTorrefacteurController {
     @GetMapping("/{id}")
     public ResponseEntity<ArtisanTorrefacteurDtoOut> getArtisanTorrefacteurById(
             @Parameter(description = "Identifiant de l'AT", example = "2") //swagger
-            @PathVariable Long id) {
+            @PathVariable Integer id) {
         log.info("Récupération de l'artisan avec id {}", id);
         return ResponseEntity.ok(artisanTorrefacteurService.getArtisanTorrefacteurById(id));
     }
@@ -147,7 +147,7 @@ public class ArtisanTorrefacteurController {
     @PutMapping("/{id}")
     public ResponseEntity<ArtisanTorrefacteurDtoOut> updateArtisanTorrefacteur(
             @Parameter(description = "Identifiant de l'AT à modifier", example = "2")
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @Valid
             @RequestBody
             @Parameter(description = "DTO contenant les nouvelles informations de l'AT")
@@ -168,7 +168,7 @@ public class ArtisanTorrefacteurController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArtisanTorrefacteur(
             @Parameter(description = "Identifiant de l'AT à supprimer", example = "2")
-            @PathVariable Long id) {
+            @PathVariable Integer id) {
         log.info("Suppression de l'AT {}", id);
         artisanTorrefacteurService.deleteArtisanTorrefacteur(id);
         return ResponseEntity.noContent().build();

@@ -74,7 +74,7 @@ public class CafeController {
     @GetMapping("/{id}")
     public ResponseEntity<CafeDtoOut> getCafeById(
             @Parameter(description = "Identifiant du café", example = "1") //swagger
-            @PathVariable Long id) {
+            @PathVariable Integer id) {
         log.info("Récupération du café avec id {}", id);
         return ResponseEntity.ok(cafeService.getCafeById(id));
     }
@@ -125,7 +125,7 @@ public class CafeController {
     @PutMapping("/{id}")
     public ResponseEntity<CafeDtoOut> updateCafe(
             @Parameter(description = "Identifiant du café à modifier", example = "1")
-            @PathVariable Long id,
+            @PathVariable Integer id,
             @Valid
             @RequestBody
             @Parameter(description = "DTO contenant les nouvelles informations du café")
@@ -146,7 +146,7 @@ public class CafeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCafe(
             @Parameter(description = "Identifiant du café à supprimer", example = "1")
-            @PathVariable Long id) {
+            @PathVariable Integer id) {
         log.info("Suppression du café {}", id);
         cafeService.deleteCafe(id);
         return ResponseEntity.noContent().build();
@@ -182,7 +182,7 @@ public class CafeController {
     })
     @GetMapping("/by-commercant/{commercantId}")
     public ResponseEntity<List<CafeDtoOut>> getCafesByCommercant(
-            @PathVariable("commercantId") Long commercantId) {
+            @PathVariable("commercantId") Integer commercantId) {
         List<CafeDtoOut> cafes = cafeService.getCafesByCommercantId(commercantId);
         return ResponseEntity.ok(cafes);
     }

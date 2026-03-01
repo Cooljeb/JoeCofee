@@ -10,10 +10,10 @@ package com.joe.coffee.api.Dto.Out;
  */
 public record MachineACafeDtoOut(
 
-        Long id,
+        Integer id,
         String nomCommercial,
         String referenceCommerciale,
         String description,
-        MarqueDtoOut marque
+        String marque
 ) {
 }

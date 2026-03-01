@@ -5,7 +5,7 @@ package com.joe.coffee.api.Exception.CafeExceptions;
  */
 public class CafeNotFoundException extends RuntimeException {
 
-    public CafeNotFoundException(Long id) {
+    public CafeNotFoundException(Integer id) {
         super("Cafe avec l'id " + id + " introuvable.");
     }
     public CafeNotFoundException(String message) {

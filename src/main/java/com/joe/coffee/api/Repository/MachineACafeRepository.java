@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 
 @Repository
-public interface MachineACafeRepository extends JpaRepository<MachineACafe, Long> {
+public interface MachineACafeRepository extends JpaRepository<MachineACafe, Integer> {
 
     Optional<MachineACafe> findByNomCommercial(String nomCommercial);
 
@@ -20,6 +20,6 @@ public interface MachineACafeRepository extends JpaRepository<MachineACafe, Long
 
     List<MachineACafe> findByDescriptionContainingIgnoreCase(String description);
 
-    List<MachineACafe> findByMarqueId(Long idMarque);
+    List<MachineACafe> findByMarqueId(Integer idMarque);
 
 }

@@ -22,7 +22,7 @@ public record MachineACafeDtoIn(
         String description,
 
         @NotNull
-        Long marqueId
+        Integer marqueId
 
 
 ) {
