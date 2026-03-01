@@ -53,7 +53,7 @@ public class DistributeurServiceImpl implements DistributeurService {
     }
 
     @Override
-    public DistributeurDtoOut getDistributeurById(Long id) {
+    public DistributeurDtoOut getDistributeurById(Integer id) {
         log.info("Récupération du distributeur avec id {}", id);
 
         return DistributeurRepository.findById(id)
@@ -77,7 +77,7 @@ public class DistributeurServiceImpl implements DistributeurService {
     }
 
     @Override
-    public DistributeurDtoOut updateDistributeur(Long id, DistributeurDtoIn DistributeurIn) {
+    public DistributeurDtoOut updateDistributeur(Integer id, DistributeurDtoIn DistributeurIn) {
         log.info("Mise à jour de la marque avec id {}", id);
         // Récupère le distributeur existant ou lance exception si introuvable
         Distributeur existingDistributeur = DistributeurRepository.findById(id)
@@ -97,7 +97,7 @@ public class DistributeurServiceImpl implements DistributeurService {
     }
 
     @Override
-    public void deleteDistributeur(Long id) {
+    public void deleteDistributeur(Integer id) {
 
         log.info("Suppression du distributeur avec id {}", id);
 

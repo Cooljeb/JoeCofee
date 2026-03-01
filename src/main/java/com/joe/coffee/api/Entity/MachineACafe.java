@@ -19,7 +19,7 @@ public class MachineACafe {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     /**
      * nom Commercial de la machine à café

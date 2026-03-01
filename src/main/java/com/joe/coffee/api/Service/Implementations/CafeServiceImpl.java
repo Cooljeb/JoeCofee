@@ -3,6 +3,7 @@ package com.joe.coffee.api.Service.Implementations;
 import com.joe.coffee.api.Dto.In.CafeDtoIn;
 import com.joe.coffee.api.Dto.Out.CafeDtoOut;
 import com.joe.coffee.api.Entity.Cafe;
+import com.joe.coffee.api.Entity.Commercant;
 import com.joe.coffee.api.Enum.LabelCafe;
 import com.joe.coffee.api.Enum.TypeCafe;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeCommercantNotFoundException;
@@ -11,6 +12,7 @@ import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
 import com.joe.coffee.api.Mapper.CafeMapper;
 import com.joe.coffee.api.Repository.CafeRepository;
+import com.joe.coffee.api.Repository.CommercantRepository;
 import com.joe.coffee.api.Service.Interfaces.CafeService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -30,6 +32,7 @@ import java.util.stream.Collectors;
 public class CafeServiceImpl implements CafeService {
 
     private final CafeRepository cafeRepository;
+    private final CommercantRepository commercantRepository;
     private final CafeMapper cafeMapper;
     private static final Logger log = LoggerFactory.getLogger(CafeServiceImpl.class);
 
@@ -43,9 +46,12 @@ public class CafeServiceImpl implements CafeService {
                     log.warn("Tentative de création d'un café déjà existant: '{}'", cafeIn.nomCafe());
                     throw new DuplicateCafeException(cafeIn.nomCafe());
                 });
+        // Vérifie si le commerçant existe en base sinon on refuse la création
+        Commercant c = commercantRepository.findById(cafeIn.commercant())
+                .orElseThrow(() -> new RuntimeException("Commercant non trouvé"));
         // Transformation DTO → Entity
         Cafe cafe = cafeMapper.toEntity(cafeIn);
-
+        cafe.setCommercant(c);
         // Sauvegarde
         Cafe savedCafe = cafeRepository.save(cafe);
         log.info("Café créé avec id {}", savedCafe.getId());
@@ -54,7 +60,7 @@ public class CafeServiceImpl implements CafeService {
     }
 
     @Override
-    public CafeDtoOut updateCafe(Long id, CafeDtoIn cafeIn) {
+    public CafeDtoOut updateCafe(Integer id, CafeDtoIn cafeIn) {
 
         log.info("Mise à jour du café avec id {}", id);
         // Récupère le café existant ou lance exception si introuvable
@@ -63,10 +69,13 @@ public class CafeServiceImpl implements CafeService {
                     log.warn("Café avec id {} introuvable pour mise à jour", id);
                     return new CafeNotFoundException(id);
                 });
-
+        // Vérifie si le commerçant existe en base sinon on refuse la maj
+        Commercant c = commercantRepository.findById(cafeIn.commercant())
+                .orElseThrow(() -> new RuntimeException("Commercant non trouvé"));
+        // Transformation DTO → Entity
         // Met à jour l'entité existante avec les nouvelles valeurs du DTO
         cafeMapper.updateEntityFromDto(cafeIn, existingCafe);
-
+        existingCafe.setCommercant(c);
         // Sauvegarde les modifications
         Cafe updatedCafe = cafeRepository.save(existingCafe);
         log.info("Café avec id {} mis à jour", updatedCafe.getId());
@@ -75,7 +84,7 @@ public class CafeServiceImpl implements CafeService {
     }
 
     @Override
-    public void deleteCafe(Long id) {
+    public void deleteCafe(Integer id) {
         log.info("Suppression du café avec id {}", id);
 
         Cafe cafe = cafeRepository.findById(id)
@@ -97,7 +106,7 @@ public class CafeServiceImpl implements CafeService {
     }
 
     @Override
-    public CafeDtoOut getCafeById(Long id) {
+    public CafeDtoOut getCafeById(Integer id) {
 
         log.info("Récupération du café avec id {}", id);
 
@@ -143,7 +152,7 @@ public class CafeServiceImpl implements CafeService {
     }
 
     @Override
-    public List<CafeDtoOut> getCafesByCommercantId(Long commercantId) {
+    public List<CafeDtoOut> getCafesByCommercantId(Integer commercantId) {
         log.info("Récupération des cafés pour le commerçant avec id {}", commercantId);
 
         List<Cafe> cafes = cafeRepository.findByCommercantId(commercantId);
@@ -160,7 +169,7 @@ public class CafeServiceImpl implements CafeService {
 
     /**
      * Spécification pour filtrer le type de café
-     * @param type
+     * @param type type de café
      * @return la spécification du type de café trouvé
      */
     private Specification<Cafe> byType(TypeCafe type) {
@@ -172,7 +181,7 @@ public class CafeServiceImpl implements CafeService {
 
     /**
      * Spécification pour filtrer  le lable de café
-     * @param label
+     * @param label label du café
      * @return la spécification du label de café trouvé
      */
     private Specification<Cafe> byLabel(LabelCafe label) {

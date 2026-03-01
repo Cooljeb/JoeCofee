@@ -17,7 +17,7 @@ public class Marque {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     /**
      * désignation de la marque

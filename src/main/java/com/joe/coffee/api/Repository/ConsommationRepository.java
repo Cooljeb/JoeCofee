@@ -10,7 +10,7 @@ import java.util.Optional;
  * Repository de recherche d'une consommation
  */
 @Repository
-public interface ConsommationRepository extends JpaRepository<Consommation, Long> {
+public interface ConsommationRepository extends JpaRepository<Consommation, Integer> {
 
     Optional<Consommation> findByReglageIntensite(byte intensite);
 

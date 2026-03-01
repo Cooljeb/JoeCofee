@@ -20,7 +20,7 @@ public  abstract class Commercant {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long  id;
+    private Integer  id;
     /**
      * Indique le nom du commerçant
      */

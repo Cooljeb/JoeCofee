@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record CafeDtoOut(
 
         @Schema(description = "Identifiant unique du café", example = "1")
-        Long id,
+        Integer id,
 
         @Schema(description = "Nom du café", example = "Colombie Supremo")
         String nomCafe,
@@ -31,7 +31,7 @@ public record CafeDtoOut(
         LabelCafe labelCafe,
 
         @Schema(description = "Identifiant du commerçant qui vend le café", example = "2")
-        Long commercant,
+        Integer commercant,
 
         @Schema(description = "Nom du commerçant qui vend le café", example = "Lyon Torréfaction")
         String commercantNom,

@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record MarqueDtoOut(
 
         @Schema(description = "Identifiant unique d'une marque", example = "1")
-        Long id,
+        Integer id,
 
         @Schema(description = "Nom de la marque", example = "DeLonghi")
         String marque

@@ -14,22 +14,31 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface CafeMapper {
 
-    Cafe toEntity(CafeDtoIn dto);
+    // DTO → Entity
+    default Cafe toEntity(CafeDtoIn dto){
 
-    // Transformation Entity → DTO OUT en incluant le commerçant
+            if (dto == null) return null;
+            Cafe cafe = new Cafe();
+            cafe.setNomCafe(dto.nomCafe());
+            cafe.setDescription(dto.description());
+            cafe.setLabelCafe(dto.labelCafe()); // Nullable ok
+            cafe.setTypeCafe(dto.typeCafe());
+            // Le commerçant sera défini dans le service : cafe.setCommercant(...)
+            return cafe;
+    }
+
+    // Entity → DTO OUT
     @Mapping(source = "commercant.id", target = "commercant")
     @Mapping(source = "commercant.nom", target = "commercantNom")
     @Mapping(expression = "java(getTypeCommercant(cafe))", target = "commercantType")
     CafeDtoOut toDto(Cafe cafe);
 
+    @Mapping(target = "commercant", ignore = true)
     void updateEntityFromDto(CafeDtoIn dto, @MappingTarget Cafe entity);
-    //méthode utilitaire qui permet déternlminer le type de commerçant
 
+    // Méthode utilitaire pour déterminer le type de commerçant
     default String getTypeCommercant(Cafe cafe) {
-
-        // Déproxyer l'objet pour retrouver sa vraie classe
         Class<?> clazz = Hibernate.getClass(cafe.getCommercant());
-
         return switch (clazz.getSimpleName()) {
             case "ArtisanTorrefacteur" -> "Artisan";
             case "Distributeur" -> "Distributeur";

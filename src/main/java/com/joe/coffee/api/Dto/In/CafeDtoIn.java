@@ -1,9 +1,16 @@
 package com.joe.coffee.api.Dto.In;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.joe.coffee.api.Enum.LabelCafe;
 import com.joe.coffee.api.Enum.TypeCafe;
+import com.joe.coffee.api.Utils.LabelCafeDeserializer;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  * Record correspondant au DTO d'entrée d'un café
@@ -41,10 +48,19 @@ public record CafeDtoIn(
         )
         TypeCafe typeCafe,
 
+        @JsonSetter(nulls = Nulls.SKIP)// si absent, ne touche pas à la valeur
+        @JsonDeserialize(using = LabelCafeDeserializer.class) // transforme "" en null
+        @Nullable
         @Schema(
                 description = "Label du café",
                 example = "BIO"
         )
-        LabelCafe labelCafe
+        LabelCafe labelCafe,
+
+        @NotNull(message = "L'identifiant du commerçant est obligatoire")
+        @Schema(description = "Identifiant du commerçant qui vend le café",
+                example = "2"
+        )
+        Integer commercant
 ) {
 }

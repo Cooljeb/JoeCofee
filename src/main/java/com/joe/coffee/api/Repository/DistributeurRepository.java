@@ -11,7 +11,7 @@ import java.util.Optional;
  * Repository de recherche d'un distributeur
  */
 @Repository
-public interface DistributeurRepository extends JpaRepository<Distributeur, Long> {
+public interface DistributeurRepository extends JpaRepository<Distributeur, Integer> {
 
     Optional<Distributeur> findByNomIgnoreCase(String nom);
 

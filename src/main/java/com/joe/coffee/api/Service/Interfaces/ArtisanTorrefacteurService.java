@@ -28,7 +28,7 @@ public interface ArtisanTorrefacteurService {
      *  @param id de l'AT
      *  @return l'AT depuis son id
      */
-    ArtisanTorrefacteurDtoOut getArtisanTorrefacteurById(Long id);
+    ArtisanTorrefacteurDtoOut getArtisanTorrefacteurById(Integer id);
 
     /**
      * Méthode de recherche d'un AT depuis son nom
@@ -43,12 +43,12 @@ public interface ArtisanTorrefacteurService {
      * @param artisanTorrefacteurIn DTO d'entrée
      * @return DO de sortie
      */
-    ArtisanTorrefacteurDtoOut updateArtisanTorrefacteur(Long id, ArtisanTorrefacteurDtoIn artisanTorrefacteurIn);
+    ArtisanTorrefacteurDtoOut updateArtisanTorrefacteur(Integer id, ArtisanTorrefacteurDtoIn artisanTorrefacteurIn);
 
     /**
      * Méthode de suppression d'un AT
      * @param id de la marque
      */
-    void  deleteArtisanTorrefacteur(Long id);
+    void  deleteArtisanTorrefacteur(Integer id);
 
 }

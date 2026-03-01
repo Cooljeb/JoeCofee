@@ -11,7 +11,7 @@ import java.util.Optional;
  * Repository de recherche d'un artisan torréfacteur
  */
 @Repository
-public interface ArtisanTorrefacteurRepository extends JpaRepository<ArtisanTorrefacteur, Long> {
+public interface ArtisanTorrefacteurRepository extends JpaRepository<ArtisanTorrefacteur, Integer> {
 
     Optional<ArtisanTorrefacteur> findByNomIgnoreCase(String nom);
 

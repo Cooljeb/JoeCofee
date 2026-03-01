@@ -59,7 +59,7 @@ public class MarqueServiceImpl implements MarqueService {
     }
 
     @Override
-    public MarqueDtoOut getMarqueById(Long id) {
+    public MarqueDtoOut getMarqueById(Integer id) {
 
         log.info("Récupération de la marque avec id {}", id);
 
@@ -72,7 +72,7 @@ public class MarqueServiceImpl implements MarqueService {
     }
 
     @Override
-    public MarqueDtoOut updateMarque(Long id, MarqueDtoIn marqueIn) {
+    public MarqueDtoOut updateMarque(Integer id, MarqueDtoIn marqueIn) {
         log.info("Mise à jour de la marque avec id {}", id);
         // Récupère la marque existante ou lance exception si introuvable
         Marque existingMarque = marqueRepository.findById(id)
@@ -104,7 +104,7 @@ public class MarqueServiceImpl implements MarqueService {
     }
 
     @Override
-    public void deleteMarque(Long id) {
+    public void deleteMarque(Integer id) {
 
         log.info("Suppression de la marque avec id {}", id);
 

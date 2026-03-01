@@ -12,8 +12,8 @@ public record ConsommationDtoIn(
         @NotNull
         Byte reglageIntensite,
         @NotNull
-        Long cafeId,
+        Integer cafeId,
         @NotNull
-        Long machineACafeId
+        Integer machineACafeId
 ) {
 }
