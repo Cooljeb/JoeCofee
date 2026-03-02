@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface MachineACafeRepository extends JpaRepository<MachineACafe, Integer> {
 
-    Optional<MachineACafe> findByNomCommercial(String nomCommercial);
+    Optional<MachineACafe> findByNomCommercialContainingIgnoreCase(String nomCommercial);
 
     Optional<MachineACafe> findByReferenceCommerciale(String referenceCommerciale);
 

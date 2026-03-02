@@ -39,6 +39,14 @@ public interface DistributeurService {
      * @param name nom de la marque
      * @return Dto de sortie
      */
+    DistributeurDtoOut getDistributeurByNameDistribGroup(String name);
+
+    /**
+     * Méthode de recherche d'un distributeur depuis son nom
+     *
+     * @param name nom de la marque
+     * @return Dto de sortie
+     */
     DistributeurDtoOut getDistributeurByName(String name);
 
     /**

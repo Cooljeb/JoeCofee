@@ -29,7 +29,7 @@ public class DistributeurServiceImpl implements DistributeurService {
 
         log.info("Création distributeur avec le nom '{}'",DistributeurIn.nom());
         // Vérifie si un distributeur avec le même nom existe déjà
-        DistributeurRepository.findByNomIgnoreCase(DistributeurIn.nom())
+        DistributeurRepository.findByNomContainingIgnoreCase(DistributeurIn.nom())
                 .ifPresent( d -> {
                     log.warn("Tentative de création d'un at déjà existant: '{}'",DistributeurIn.nom());
                     throw new DuplicateDistributeurException(DistributeurIn.nom());
@@ -65,10 +65,22 @@ public class DistributeurServiceImpl implements DistributeurService {
     }
 
     @Override
+    public DistributeurDtoOut getDistributeurByNameDistribGroup(String name) {
+        log.info("Recherche du distributeur avec son nom de groupe de distribution {}", name);
+
+        return DistributeurRepository.findBynomDuGroupeDeDistributionContainingIgnoreCase(name)
+                .map(DistributeurMapper::toDto)
+                .orElseThrow(() -> {
+                    log.warn("distributeur avec le groupe de distribution avec le nom {} introuvable", name);
+                    return new DistributeurNotFoundException(name);
+                });
+    }
+
+    @Override
     public DistributeurDtoOut getDistributeurByName(String name) {
         log.info("Recherche du distributeur avec le nom {}", name);
 
-        return DistributeurRepository.findByNomIgnoreCase(name)
+        return DistributeurRepository.findByNomContainingIgnoreCase(name)
                 .map(DistributeurMapper::toDto)
                 .orElseThrow(() -> {
                     log.warn("distributeur avec le nom {} introuvable", name);

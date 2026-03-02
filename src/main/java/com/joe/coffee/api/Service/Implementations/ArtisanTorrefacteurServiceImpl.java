@@ -30,7 +30,7 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
 
         log.info("Création d'une marque avec le nom '{}'",artisanTorrefacteurIn.nom());
         // Vérifie si un AT avec le même nom existe déjà
-        artisanTorrefacteurRepository.findByNomIgnoreCase(artisanTorrefacteurIn.nom())
+        artisanTorrefacteurRepository.findByNomContainingIgnoreCase(artisanTorrefacteurIn.nom())
                 .ifPresent( at -> {
                     log.warn("Tentative de création d'un at déjà existant: '{}'",artisanTorrefacteurIn.nom());
                     throw new DuplicateArtisanTorrefacteurException(artisanTorrefacteurIn.nom());
@@ -69,7 +69,7 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
     public ArtisanTorrefacteurDtoOut getArtisanTorrefacteurByName(String name) {
         log.info("Recherche de l'AT avec le nom {}", name);
 
-        return artisanTorrefacteurRepository.findByNomIgnoreCase(name)
+        return artisanTorrefacteurRepository.findByNomContainingIgnoreCase(name)
                 .map(artisanTorrefacteurMapper::toDto)
                 .orElseThrow(() -> {
                     log.warn("AT avec le nom {} introuvable", name);

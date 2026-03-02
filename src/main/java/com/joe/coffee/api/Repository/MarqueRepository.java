@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface MarqueRepository  extends JpaRepository<Marque, Integer> {
 
-    Optional<Marque> findByMarqueIgnoreCase(String marque);
+    Optional<Marque> findByMarqueContainingIgnoreCase(String marque);
 
 
 }
