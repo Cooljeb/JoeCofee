@@ -33,7 +33,7 @@ public class MarqueServiceImpl implements MarqueService {
 
         log.info("Création d'une marque avec le nom '{}'",marqueIn.marque());
         // Vérifie si une marque avec le même nom existe déjà
-        marqueRepository.findByMarqueIgnoreCase(marqueIn.marque())
+        marqueRepository.findByMarqueContainingIgnoreCase(marqueIn.marque())
                 .ifPresent( m -> {
                     log.warn("Tentative de création d'un café déjà existant: '{}'",marqueIn.marque());
                     throw new DuplicateMarqueException(marqueIn.marque());
@@ -95,7 +95,7 @@ public class MarqueServiceImpl implements MarqueService {
     public MarqueDtoOut getMarqueByName(String name) {
         log.info("Recherche de la marque avec id {}", name);
 
-        return marqueRepository.findByMarqueIgnoreCase(name)
+        return marqueRepository.findByMarqueContainingIgnoreCase(name)
                 .map(marqueMapper::toDto)
                 .orElseThrow(() -> {
                     log.warn("Marque avec le nom {} introuvable", name);

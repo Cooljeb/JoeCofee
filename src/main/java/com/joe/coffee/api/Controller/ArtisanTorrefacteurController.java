@@ -24,7 +24,7 @@ import java.util.List;
  * présente les différents EndPOint REST
  */
 @RestController
-@RequestMapping("/api/ArtisanTorrefacteur")
+@RequestMapping("/api/artisanTorrefacteur")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Artisans Torréfacteurs", description = "Gestion des des artisans Torréfacteurs de cafés")

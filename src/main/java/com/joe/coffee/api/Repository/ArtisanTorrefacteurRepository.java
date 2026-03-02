@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ArtisanTorrefacteurRepository extends JpaRepository<ArtisanTorrefacteur, Integer> {
 
-    Optional<ArtisanTorrefacteur> findByNomIgnoreCase(String nom);
+    Optional<ArtisanTorrefacteur> findByNomContainingIgnoreCase(String nom);
 
 }

@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface DistributeurRepository extends JpaRepository<Distributeur, Integer> {
 
-    Optional<Distributeur> findByNomIgnoreCase(String nom);
+    Optional<Distributeur>findByNomContainingIgnoreCase(String nom);
 
-    List<Distributeur> findBynomDuGroupeDeDistribution(String nomDuGroupeDeDistribution);
+    Optional<Distributeur> findBynomDuGroupeDeDistributionContainingIgnoreCase(String nomDuGroupeDeDistribution);
 }
