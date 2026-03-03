@@ -1,11 +1,13 @@
 package com.joe.coffee.api.Exception;
 
 import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.ArtisanTorrefacteurNotFoundException;
+import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DeleteLinkCafeArtisanTorrefacteurException;
 import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DuplicateArtisanTorrefacteurException;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeCommercantNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
+import com.joe.coffee.api.Exception.DistributeurExceptions.DeleteLinkCafeDistributeurException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DistributeurNotFoundException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DuplicateDistributeurException;
 import com.joe.coffee.api.Exception.MarqueExceptions.DuplicateMarqueException;
@@ -119,6 +121,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(DeleteLinkCafeArtisanTorrefacteurException.class)
+    public ResponseEntity<ErrorResponse> handleDeleteLinkCafeArtisanTorrefacteur(DeleteLinkCafeArtisanTorrefacteurException ex) {
+        log.warn("Erreur 409 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(DistributeurNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleDistributeurNotFound(DistributeurNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
@@ -132,6 +145,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateDistributeurException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateDistributeur(DuplicateDistributeurException ex) {
+        log.warn("Erreur 409 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(DeleteLinkCafeDistributeurException.class)
+    public ResponseEntity<ErrorResponse> handleDeleteLinkCafeDistributeur(DeleteLinkCafeDistributeurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),

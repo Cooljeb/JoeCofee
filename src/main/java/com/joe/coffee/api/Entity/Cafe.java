@@ -56,7 +56,7 @@ public class Cafe {
      * Lien vers le commerçant
      */
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "commercant_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "commercant_id", nullable = false)
     private Commercant commercant;
 }

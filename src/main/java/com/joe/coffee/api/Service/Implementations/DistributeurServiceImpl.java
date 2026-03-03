@@ -3,9 +3,11 @@ package com.joe.coffee.api.Service.Implementations;
 import com.joe.coffee.api.Dto.In.DistributeurDtoIn;
 import com.joe.coffee.api.Dto.Out.DistributeurDtoOut;
 import com.joe.coffee.api.Entity.Distributeur;
+import com.joe.coffee.api.Exception.DistributeurExceptions.DeleteLinkCafeDistributeurException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DistributeurNotFoundException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DuplicateDistributeurException;
 import com.joe.coffee.api.Mapper.DistributeurMapper;
+import com.joe.coffee.api.Repository.CafeRepository;
 import com.joe.coffee.api.Repository.DistributeurRepository;
 import com.joe.coffee.api.Service.Interfaces.DistributeurService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 public class DistributeurServiceImpl implements DistributeurService {
 
     private final DistributeurRepository DistributeurRepository;
+    private final CafeRepository cafeRepository;
     private final DistributeurMapper DistributeurMapper;
     private static final Logger log = LoggerFactory.getLogger(DistributeurServiceImpl.class);
 
@@ -113,12 +116,16 @@ public class DistributeurServiceImpl implements DistributeurService {
 
         log.info("Suppression du distributeur avec id {}", id);
 
-        Distributeur Distributeur = DistributeurRepository.findById(id)
+        Distributeur distributeur = DistributeurRepository.findById(id)
                 .orElseThrow(() -> {
                     log.warn("distributeur avec id {} introuvable suppression impossible", id);
                     return new DistributeurNotFoundException(id);
                 });
-        DistributeurRepository.delete(Distributeur);
+        if (cafeRepository.existsByCommercantId(id)) {
+            log.warn("Impossible de supprimer ce distributeur : des cafés sont rattachés");
+            throw new DeleteLinkCafeDistributeurException();
+        }
+        DistributeurRepository.delete(distributeur);
         log.info("Distributeur avec id {} supprimé", id);
 
     }

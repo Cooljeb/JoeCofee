@@ -33,14 +33,14 @@ public class Consommation {
     /**
      * Café correspondant à la consommation
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cafe_id")
-    private  Cafe cafe;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cafe_id", nullable = false)
+    private Cafe cafe;
 
     /**
      * Machine correspondant à la consommation
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "machine_a_cafe_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "machine_a_cafe_id", nullable = false)
     private MachineACafe machineACafe;
 }

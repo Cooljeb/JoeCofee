@@ -101,7 +101,7 @@ public class DistributeurController {
         return ResponseEntity.ok(DistributeurService.getDistributeurByName(name));
     }
 
-    // GET by name
+    // GET by distributeur name
     @Operation(
             summary = "Récupérer un distributeur depuis son groupe de distribution",
             description = "Retourne un distributeur depuis son groupe de distribution"
@@ -189,7 +189,8 @@ public class DistributeurController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Distributeur supprimé avec succès"),
-            @ApiResponse(responseCode = "404", description = "Distributeur non trouvé")
+            @ApiResponse(responseCode = "404", description = "Distributeur non trouvé"),
+            @ApiResponse(responseCode = "409", description = "Suppression NOK,au moins un café est lié à de distributeur")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDistributeur(

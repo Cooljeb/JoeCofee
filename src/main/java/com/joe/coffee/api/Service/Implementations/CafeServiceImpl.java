@@ -92,7 +92,12 @@ public class CafeServiceImpl implements CafeService {
                     log.warn("Café avec id {} introuvable pour suppression", id);
                     return new CafeNotFoundException(id);
                 });
-
+//        if (consommationRepository.existsByCafeId(id)) {
+//            throw new IllegalStateException(
+//                    "Impossible de supprimer ce café : des consommations existent"
+//            log.warn("Impossible de supprimer ce café : des consommations existent");
+//            );
+//        }
         cafeRepository.delete(cafe);
         log.info("Café avec id {} supprimé", id);
     }

@@ -42,8 +42,8 @@ public class MachineACafe {
     /**
      * marque de la machine
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "marque_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "marque_id", nullable = false)
     private Marque marque;
 
     /**
