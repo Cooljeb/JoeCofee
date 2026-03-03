@@ -18,9 +18,7 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer>, JpaSpecifi
 
     Optional<Cafe> findByNomCafeIgnoreCase(String nom);
 
-    Optional<Cafe> findByDescriptionContainingIgnoreCase(String texte);
-
     List<Cafe> findByCommercantId(Integer commercantId);
 
-
+    boolean existsByCommercantId(Integer commercantId);
 }

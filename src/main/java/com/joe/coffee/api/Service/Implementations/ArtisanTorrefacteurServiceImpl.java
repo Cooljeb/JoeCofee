@@ -4,9 +4,11 @@ import com.joe.coffee.api.Dto.In.ArtisanTorrefacteurDtoIn;
 import com.joe.coffee.api.Dto.Out.ArtisanTorrefacteurDtoOut;
 import com.joe.coffee.api.Entity.ArtisanTorrefacteur;
 import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.ArtisanTorrefacteurNotFoundException;
+import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DeleteLinkCafeArtisanTorrefacteurException;
 import com.joe.coffee.api.Exception.ArtisanTorrefacteurExceptions.DuplicateArtisanTorrefacteurException;
 import com.joe.coffee.api.Mapper.ArtisanTorrefacteurMapper;
 import com.joe.coffee.api.Repository.ArtisanTorrefacteurRepository;
+import com.joe.coffee.api.Repository.CafeRepository;
 import com.joe.coffee.api.Service.Interfaces.ArtisanTorrefacteurService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,6 +23,7 @@ import java.util.List;
 public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurService {
 
     private final ArtisanTorrefacteurRepository artisanTorrefacteurRepository;
+    private final CafeRepository cafeRepository;
     private final ArtisanTorrefacteurMapper artisanTorrefacteurMapper;
     private static final Logger log = LoggerFactory.getLogger(ArtisanTorrefacteurServiceImpl.class);
 
@@ -107,6 +110,10 @@ public class ArtisanTorrefacteurServiceImpl implements ArtisanTorrefacteurServic
                     log.warn("AT avec id {} introuvable suppression impossible", id);
                     return new ArtisanTorrefacteurNotFoundException(id);
                 });
+        if (cafeRepository.existsByCommercantId(id)) {
+            log.warn("Impossible de supprimer cet artisan : des cafés sont rattachés");
+            throw new DeleteLinkCafeArtisanTorrefacteurException();
+        }
         artisanTorrefacteurRepository.delete(artisanTorrefacteur);
         log.info("Marque avec id {} supprimée", id);
 

@@ -142,7 +142,7 @@ public class ArtisanTorrefacteurController {
                     )
             ),
             @ApiResponse(responseCode = "400", description = "Données invalides fournies"),
-            @ApiResponse(responseCode = "404", description = "AT non trouvée")
+            @ApiResponse(responseCode = "404", description = "AT non trouvé")
     })
     @PutMapping("/{id}")
     public ResponseEntity<ArtisanTorrefacteurDtoOut> updateArtisanTorrefacteur(
@@ -163,7 +163,8 @@ public class ArtisanTorrefacteurController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "AT supprimé avec succès"),
-            @ApiResponse(responseCode = "404", description = "AT non trouvé")
+            @ApiResponse(responseCode = "404", description = "AT non trouvé"),
+            @ApiResponse(responseCode = "409", description = "Suppression NOK,au moins un café est lié à l'AT")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArtisanTorrefacteur(
