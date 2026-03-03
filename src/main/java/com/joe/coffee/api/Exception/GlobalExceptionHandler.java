@@ -10,6 +10,8 @@ import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DeleteLinkCafeDistributeurException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DistributeurNotFoundException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DuplicateDistributeurException;
+import com.joe.coffee.api.Exception.MachineACafeExceptions.DuplicateMachineACafeException;
+import com.joe.coffee.api.Exception.MachineACafeExceptions.MachineACafeNotFoundException;
 import com.joe.coffee.api.Exception.MarqueExceptions.DuplicateMarqueException;
 import com.joe.coffee.api.Exception.MarqueExceptions.MarqueNotFoundException;
 import org.slf4j.Logger;
@@ -156,6 +158,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DeleteLinkCafeDistributeurException.class)
     public ResponseEntity<ErrorResponse> handleDeleteLinkCafeDistributeur(DeleteLinkCafeDistributeurException ex) {
+        log.warn("Erreur 409 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.CONFLICT.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(MachineACafeNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMachineACafeNotFound(MachineACafeNotFoundException ex) {
+        log.warn("Erreur 404 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateMachineACafeException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateMachineACafe(DuplicateMachineACafeException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
         ErrorResponse error = new ErrorResponse(
                 HttpStatus.CONFLICT.value(),
