@@ -7,6 +7,7 @@ import com.joe.coffee.api.Exception.CafeExceptions.CafeCommercantNotFoundExcepti
 import com.joe.coffee.api.Exception.CafeExceptions.CafeNotFoundException;
 import com.joe.coffee.api.Exception.CafeExceptions.DuplicateCafeException;
 import com.joe.coffee.api.Exception.CafeExceptions.EmptyCafeFilterException;
+import com.joe.coffee.api.Exception.ConsommationExceptions.ConsommationNotFoundException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DeleteLinkCafeDistributeurException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DistributeurNotFoundException;
 import com.joe.coffee.api.Exception.DistributeurExceptions.DuplicateDistributeurException;
@@ -36,45 +37,38 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CafeNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCafeNotFound(CafeNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CafeCommercantNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCafeCommercantNotFound(CafeCommercantNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EmptyCafeFilterException.class)
     public ResponseEntity<ErrorResponse> handleEmptyCafeFilter(EmptyCafeFilterException ex) {
         log.warn("Erreur 400 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateCafeException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateCafe(DuplicateCafeException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    // CONSOMMATION
+
+    @ExceptionHandler(ConsommationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleConsommationNotFound(ConsommationNotFoundException ex) {
+        log.warn("Erreur 404 : {}", ex.getMessage());
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     // MARQUE
@@ -82,117 +76,73 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MarqueNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleMarqueNotFound(MarqueNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateMarqueException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateMarque(DuplicateMarqueException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(ArtisanTorrefacteurNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleArtisanTorrefacteurNotFound(ArtisanTorrefacteurNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateArtisanTorrefacteurException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateArtisanTorrefacteur(DuplicateArtisanTorrefacteurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(DeleteLinkCafeArtisanTorrefacteurException.class)
     public ResponseEntity<ErrorResponse> handleDeleteLinkCafeArtisanTorrefacteur(DeleteLinkCafeArtisanTorrefacteurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(DistributeurNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleDistributeurNotFound(DistributeurNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateDistributeurException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateDistributeur(DuplicateDistributeurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(DeleteLinkCafeDistributeurException.class)
     public ResponseEntity<ErrorResponse> handleDeleteLinkCafeDistributeur(DeleteLinkCafeDistributeurException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(MachineACafeNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleMachineACafeNotFound(MachineACafeNotFoundException ex) {
         log.warn("Erreur 404 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateMachineACafeException.class)
     public ResponseEntity<ErrorResponse> handleDuplicateMachineACafe(DuplicateMachineACafeException ex) {
         log.warn("Erreur 409 : {}", ex.getMessage());
-        ErrorResponse error = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ex.getMessage(),
-                LocalDateTime.now()
-        );
+        ErrorResponse error = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
-//    @ExceptionHandler(AutreException.class)
-//    public ResponseEntity<ErrorResponse> handleAutre(AutreException ex) { ... }
-
-    // Validation DTO
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -212,10 +162,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAll(Exception ex) {
         log.error("Erreur inattendue: {}", ex.getMessage(), ex);
         ErrorResponse error = new ErrorResponse(
-            HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            "Erreur serveur interne",
-            LocalDateTime.now()
-    );
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Erreur serveur interne",
+                LocalDateTime.now()
+        );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
