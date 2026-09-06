@@ -12,12 +12,33 @@ Pratiquer et consolider les bases du développement logiciel à travers un proje
 
 Backend : Java – API REST
 
-Frontend : Angular
+Frontend : à initialiser dans `/front` après validation du CDC et du choix technique
 
 Base de données : SQLite
 
 Déploiement : Raspberry Pi Zero 2 W
 
+🗂️ Organisation du dépôt
+
+- `/back` : application backend complète (Maven, sources Java, ressources, tests et données)
+- `/front` : emplacement réservé au futur frontend
+- racine : documentation et fichiers communs au projet
+
+Pour travailler sur le backend :
+
+```bash
+cd back
+./mvnw test
+```
+
+Sous Windows :
+
+```powershell
+cd back
+.\mvnw.cmd test
+```
+
+Le déplacement du backend dans `/back` ne modifie pas les packages Java : l'arborescence Maven interne reste `src/main/java` et `src/test/java`, donc les imports Java existants restent valides.
 
 ✨ Fonctionnalités prévues
 
@@ -35,10 +56,7 @@ Consultation, modification et suppression des données
 
 API REST documentée via Swagger / OpenAPI
 
-
 Hors MVP (évolutions envisagées)
-
-Les fonctionnalités suivantes sont volontairement exclues du MVP afin de rester focalisé sur les fondamentaux :
 
 Authentification / autorisation (JWT, rôles, sécurité)
 
@@ -50,14 +68,9 @@ Recherche full-text avancée
 
 Gestion des erreurs avancée et internationalisation
 
-Tests automatisés (unitaires / intégration)
-
 Frontend complet et UX avancée
 
 Déploiement automatisé (CI/CD)
-
-
-Ces éléments pourront être intégrés dans des itérations ultérieures.
 
 🧱 Architecture
 
@@ -71,34 +84,9 @@ Repository : accès aux données (Spring Data)
 
 DTO / Mapper : séparation entre modèles internes et données exposées
 
-
 🚧 État du projet
 
-Projet en cours de développement, à usage personnel.
-
-MVP – Avancement actuel
-
-Le projet est volontairement construit de manière progressive.
-
-Ordre de réalisation actuel du MVP :
-
-1. Implémentation des Repositories
-
-
-2. Mise en place des Services (logique métier)
-
-
-3. Création des DTO (records) et Mappers
-
-
-4. Exposition des fonctionnalités via les Controllers REST
-
-
-5. Mise en place de la documentation de l’API avec Swagger / OpenAPI
-
-
-
-L’objectif du MVP est de disposer d’une API REST fonctionnelle, claire et documentée, couvrant les opérations CRUD essentielles.
+Le backend du MVP couvre les opérations CRUD essentielles et l'API REST. Le projet passe maintenant à la préparation du frontend, en conservant une séparation claire `/back` et `/front`.
 
 🧠 Choix techniques & bonnes pratiques
 
@@ -111,6 +99,5 @@ Séparation stricte des couches (Controller / Service / Repository)
 Base de données SQLite pour la simplicité et la légèreté
 
 Déploiement sur Raspberry Pi pour valider un cycle complet de mise en production
-
 
 Ces choix sont orientés apprentissage, lisibilité et maintenabilité du code.
