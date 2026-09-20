@@ -3,10 +3,12 @@ import type { Machine } from '../../types/machine'
 
 /**
  * Service d'accès aux machines à café.
- * La View demande des machines ; ce service est responsable de traduire cette
- * intention métier en appel REST vers Spring.
+ * `httpClient` contient déjà le préfixe `/api` : ce service reprend donc
+ * uniquement le mapping métier réel de `MachineACafeController`.
  */
+const RESOURCE = '/machines-a-cafe'
+
 export const machineService = {
-  getAll: () => apiRequest<Machine[]>('/machines'),
-  getById: (id: number) => apiRequest<Machine>(`/machines/${id}`)
+  getAll: () => apiRequest<Machine[]>(RESOURCE),
+  getById: (id: number) => apiRequest<Machine>(`${RESOURCE}/${id}`)
 }
