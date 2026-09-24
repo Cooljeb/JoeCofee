@@ -10,8 +10,17 @@ export interface Coffee {
   nomCafe: string
   description: string
   typeCafe: string
-  labelCafe: string
+  labelCafe: string | null
   commercant: number
   commercantNom: string
   commercantType: string
+}
+
+/** Corps POST/PUT strictement aligné sur `CafeDtoIn`. */
+export interface CoffeeInput {
+  nomCafe: string
+  description: string
+  typeCafe: string
+  labelCafe: string | null
+  commercant: number
 }
