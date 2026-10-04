@@ -63,3 +63,9 @@ Le MVP couvre notamment :
 ## Backend
 
 Le backend est traité comme un contrat : avant d'ajouter ou modifier un type Front, vérifier le Controller Spring et ses DTO IN/OUT. Une divergence découverte doit être documentée plutôt que compensée par un champ inventé côté Vue.
+
+## Stabilisation MVP
+
+Avant validation du MVP, vérifier sur téléphone, tablette et desktop : navigation clavier, focus visible, libellés des formulaires, états chargement/vide/erreur/succès et comportement avec `prefers-reduced-motion`.
+
+Les tests automatisés couvrent en priorité la frontière HTTP et les composants réutilisés dans les parcours critiques. Ils complètent, mais ne remplacent pas, la vérification du parcours « nouvelle consommation -> historique » avec le backend démarré.
