@@ -69,3 +69,14 @@ Le backend est traité comme un contrat : avant d'ajouter ou modifier un type Fr
 Avant validation du MVP, vérifier sur téléphone, tablette et desktop : navigation clavier, focus visible, libellés des formulaires, états chargement/vide/erreur/succès et comportement avec `prefers-reduced-motion`.
 
 Les tests automatisés couvrent en priorité la frontière HTTP et les composants réutilisés dans les parcours critiques. Ils complètent, mais ne remplacent pas, la vérification du parcours « nouvelle consommation -> historique » avec le backend démarré.
+
+## Socle Vite et design
+
+`index.html` monte `src/main.ts`, qui instancie `App.vue` et `AppShell.vue`.
+`src/styles/main.css` centralise la palette café/crème, la navigation mobile,
+les contrastes de boutons, les focus clavier et la réduction des animations.
+La variable optionnelle `VITE_API_BASE_URL` remplace l'URL API par défaut
+`http://localhost:8080/api` selon l'environnement de lancement.
+
+La branche #111 doit encore passer les commandes de build et de tests dans
+un environnement où les dépendances npm sont installables, puis une revue UX.
