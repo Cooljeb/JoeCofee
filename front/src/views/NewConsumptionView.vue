@@ -37,7 +37,9 @@ const canSubmit = computed(() =>
 )
 
 /** Charge en parallèle les deux référentiels nécessaires au formulaire. */
-onMounted(async () => {
+async function loadReferences() {
+  loading.value = true
+  errorMessage.value = ''
   try {
     ;[coffees.value, machines.value] = await Promise.all([
       coffeeService.getAll(),
@@ -48,7 +50,10 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
+
+// onMounted déclenche le premier chargement ; la même fonction sert à réessayer.
+onMounted(loadReferences)
 
 async function submitConsumption() {
   if (!canSubmit.value || cafeId.value === null || machineACafeId.value === null) return
@@ -85,7 +90,12 @@ async function submitConsumption() {
 
     <p v-if="loading" role="status">Chargement des cafés et machines…</p>
 
-    <form v-else class="consumption-form" @submit.prevent="submitConsumption">
+    <div v-if="!loading && errorMessage && (!coffees.length || !machines.length)" role="alert">
+      <p>{{ errorMessage }}</p>
+      <button type="button" @click="loadReferences">Réessayer le chargement</button>
+    </div>
+
+    <form v-else-if="!loading" class="consumption-form" @submit.prevent="submitConsumption">
       <label>
         Café
         <select v-model="cafeId" required>
