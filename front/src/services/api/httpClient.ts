@@ -32,7 +32,8 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
     return await response.json() as T
   } catch (error) {
     if (error instanceof ApiError) throw error
-    console.error(`[API] Backend indisponible pour ${method} ${path}`, error)
+    // Ne pas journaliser l'exception brute : son contenu peut exposer des détails réseau.
+    console.error(`[API] Échec réseau ou réponse invalide pour ${method} ${path}`)
     throw new ApiError(0, 'Backend indisponible')
   }
 }
