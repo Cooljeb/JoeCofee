@@ -4,10 +4,12 @@ import { flushPromises, mount } from '@vue/test-utils'
 import NewConsumptionView from './NewConsumptionView.vue'
 import { coffeeService } from '../services/api/coffeeService'
 import { machineService } from '../services/api/machineService'
+import { consumptionService } from '../services/api/consumptionService'
 
 // Les services sont simulés : on teste les états de la View sans backend ni réseau.
 vi.mock('../services/api/coffeeService', () => ({ coffeeService: { getAll: vi.fn() } }))
 vi.mock('../services/api/machineService', () => ({ machineService: { getAll: vi.fn() } }))
+vi.mock('../services/api/consumptionService', () => ({ consumptionService: { create: vi.fn() } }))
 vi.mock('vue-router', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 const coffee = {
@@ -27,6 +29,10 @@ describe('NewConsumptionView — états du formulaire', () => {
     vi.resetAllMocks()
     vi.mocked(coffeeService.getAll).mockResolvedValue([coffee])
     vi.mocked(machineService.getAll).mockResolvedValue([machine])
+    vi.mocked(consumptionService.create).mockResolvedValue({
+      codeConsommation: 8, cafeId: 1, machineACafeId: 2,
+      reglageBroyeur: 4, reglageIntensite: 5
+    })
   })
 
   it('guide vers les référentiels quand aucun café ni machine ne sont disponibles', async () => {
@@ -70,4 +76,40 @@ describe('NewConsumptionView — états du formulaire', () => {
     await inputs[0].setValue('7')
     expect(wrapper.get('button[type="submit"]').attributes('disabled')).toBeUndefined()
   })
+  it('envoie les réglages sélectionnés au service puis confirme la création', async () => {
+    const wrapper = mountView()
+    await flushPromises()
+    const selects = wrapper.findAll('select')
+    await selects[0].setValue('1')
+    await selects[1].setValue('2')
+    const inputs = wrapper.findAll('input[type="number"]')
+    await inputs[0].setValue('4')
+    await inputs[1].setValue('5')
+
+    await wrapper.get('form').trigger('submit')
+    await flushPromises()
+
+    expect(consumptionService.create).toHaveBeenCalledOnce()
+    expect(consumptionService.create).toHaveBeenCalledWith({
+      cafeId: 1, machineACafeId: 2, reglageBroyeur: 4, reglageIntensite: 5
+    })
+    expect(wrapper.text()).toContain('Consommation enregistrée')
+    expect(wrapper.get('button[type="submit"]').attributes('disabled')).toBeDefined()
+  })
+
+  it('réactive le formulaire après un échec de création', async () => {
+    vi.mocked(consumptionService.create).mockRejectedValueOnce(new Error('serveur indisponible'))
+    const wrapper = mountView()
+    await flushPromises()
+    const selects = wrapper.findAll('select')
+    await selects[0].setValue('1')
+    await selects[1].setValue('2')
+
+    await wrapper.get('form').trigger('submit')
+    await flushPromises()
+
+    expect(wrapper.get('[role="alert"]').text()).toContain("n'a pas pu être enregistrée")
+    expect(wrapper.get('button[type="submit"]').attributes('disabled')).toBeUndefined()
+  })
+
 })
