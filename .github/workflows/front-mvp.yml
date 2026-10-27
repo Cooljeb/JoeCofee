@@ -1,0 +1,31 @@
+name: Front MVP checks
+
+on:
+  pull_request:
+    branches: [Develop]
+    paths:
+      - 'front/**'
+      - '.github/workflows/front-mvp.yml'
+  workflow_dispatch:
+
+jobs:
+  front:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: front
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # Pas encore de package-lock.json : npm ci n'est pas utilisable.
+      # Passer à npm ci dès qu'un lockfile versionné est disponible.
+      - name: Installer les dépendances
+        run: npm install --no-audit --no-fund
+      - name: Tests Vitest
+        run: npm test
+      - name: Build TypeScript et Vite
+        run: npm run build
