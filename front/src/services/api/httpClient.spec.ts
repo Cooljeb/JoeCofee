@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { ApiError, apiRequest } from './httpClient'
+import { apiRequest } from './httpClient'
 
 describe('apiRequest', () => {
   afterEach(() => {
@@ -27,13 +27,13 @@ describe('apiRequest', () => {
   it('normalise une erreur HTTP en ApiError', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 404 })))
 
-    await expect(apiRequest('/absent')).rejects.toMatchObject<ApiError>({ status: 404 })
+    await expect(apiRequest('/absent')).rejects.toMatchObject({ status: 404 })
   })
 
   it('normalise une panne réseau sans exposer le détail technique aux vues', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('network down')))
 
-    await expect(apiRequest('/test')).rejects.toMatchObject<ApiError>({
+    await expect(apiRequest('/test')).rejects.toMatchObject({
       status: 0,
       message: 'Backend indisponible'
     })
