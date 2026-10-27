@@ -14,7 +14,9 @@ const hasError = ref(false)
  */
 const recentConsumptions = computed(() => consumptions.value.slice(-3).reverse())
 
-onMounted(async () => {
+async function loadRecent() {
+  loading.value = true
+  hasError.value = false
   try {
     consumptions.value = await consumptionService.getAll()
   } catch {
@@ -22,7 +24,9 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
+
+onMounted(loadRecent)
 </script>
 
 <template>
@@ -35,7 +39,7 @@ onMounted(async () => {
     <section class="recent" aria-labelledby="recent-title">
       <header><div><p class="eyebrow">Dernières dégustations</p><h2 id="recent-title">Récemment</h2></div><RouterLink to="/consommations">Tout voir</RouterLink></header>
       <p v-if="loading" role="status">Chargement…</p>
-      <p v-else-if="hasError" role="alert">Les dernières consommations sont indisponibles pour le moment.</p>
+      <div v-else-if="hasError" class="empty" role="alert"><p>Les dernières consommations sont indisponibles pour le moment.</p><button type="button" @click="loadRecent">Réessayer</button></div>
       <div v-else-if="recentConsumptions.length === 0" class="empty"><p>Pas encore de dégustation.</p><RouterLink to="/consommations/new">Commencer</RouterLink></div>
       <div v-else class="recent-list"><ConsumptionCard v-for="item in recentConsumptions" :key="item.codeConsommation" :consumption="item" /></div>
     </section>
