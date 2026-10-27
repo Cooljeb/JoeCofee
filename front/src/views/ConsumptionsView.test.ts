@@ -52,6 +52,7 @@ describe('ConsumptionsView — historique MVP', () => {
     const wrapper = mountView()
     await flushPromises()
     expect(wrapper.text()).toContain('Aucune consommation')
-    expect(wrapper.text()).toContain('Enregistrer la première')
+    // RouterLink est stubé : son texte n'est pas rendu, mais la destination doit rester correcte.
+    expect(wrapper.find('router-link-stub[to="/consommations/new"]').exists()).toBe(true)
   })
 })
