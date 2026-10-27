@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api'
+// Par défaut, le navigateur appelle la même origine : Vite relaie /api vers Spring en développement.
+// En production, le serveur frontal doit router /api vers le backend.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
 
 /** Erreur normalisée : les vues n'ont pas à connaître les détails de fetch. */
 export class ApiError extends Error {
