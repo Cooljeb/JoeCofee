@@ -137,7 +137,7 @@ async function submitConsumption() {
         </label>
         <label>
           Intensité
-          <input v-model.number="reglageIntensite" type="number" min="1" required />
+          <input v-model.number="reglageIntensite" type="number" min="1" max="127" step="1" required />
         </label>
       </div>
 
