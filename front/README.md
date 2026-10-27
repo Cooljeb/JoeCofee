@@ -83,5 +83,7 @@ les contrastes de boutons, les focus clavier et la réduction des animations.
 La variable optionnelle `VITE_API_BASE_URL` remplace l'URL API par défaut
 `http://localhost:8080/api` selon l'environnement de lancement.
 
-La branche #111 doit encore passer les commandes de build et de tests dans
-un environnement où les dépendances npm sont installables, puis une revue UX.
+La branche #111 a passé les tests Vitest (10/10) et le build TypeScript/Vite
+sur GitHub Actions le 27 octobre 2026 (commit `dd979a4`, run `40457518508`).
+Ces résultats automatisés ne valident pas le parcours réel avec Spring ni la
+revue visuelle sur téléphone, tablette et desktop : ces contrôles restent à faire.
