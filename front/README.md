@@ -80,8 +80,15 @@ Les tests automatisés couvrent en priorité la frontière HTTP et les composant
 `index.html` monte `src/main.ts`, qui instancie `App.vue` et `AppShell.vue`.
 `src/styles/main.css` centralise la palette café/crème, la navigation mobile,
 les contrastes de boutons, les focus clavier et la réduction des animations.
-La variable optionnelle `VITE_API_BASE_URL` remplace l'URL API par défaut
-`http://localhost:8080/api` selon l'environnement de lancement.
+Le Front appelle par défaut **`/api` sur sa propre origine**. En développement,
+`vite.config.ts` relaie ce chemin vers `http://localhost:8080` (Spring), ce qui
+évite les erreurs CORS entre le navigateur et le backend local.
+
+En production, configurer un **reverse proxy** `/api` vers Spring sur la même
+origine que le Front. La variable optionnelle `VITE_API_BASE_URL` permet de
+cibler une API différente ; si elle désigne une autre origine, le serveur API
+doit autoriser explicitement les origines CORS correspondantes. La décision
+de déploiement est suivie dans l'issue #126, séparément du MVP local.
 
 La branche #111 a passé les tests Vitest (10/10) et le build TypeScript/Vite
 sur GitHub Actions le 27 octobre 2026 (commit `dd979a4`, run `40457518508`).
