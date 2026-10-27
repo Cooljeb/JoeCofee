@@ -22,9 +22,14 @@ Vite affiche l'URL locale à ouvrir dans le navigateur.
 ## Vérifications avant PR
 
 ```bash
-npm run build
+npm install
 npm test
+npm run build
 ```
+
+La PR vers `Develop` déclenche également `.github/workflows/front-mvp.yml` sur GitHub Actions (Node 22). Le workflow installe les dépendances, exécute Vitest puis vérifie TypeScript et le build Vite. Il faut consulter le statut du run avant toute validation.
+
+Le projet ne possède pas encore de `package-lock.json` versionné : `npm ci` ne fonctionne pas dans cet état. Le workflow utilise provisoirement `npm install`. TypeScript est borné à la série 5.9 pour éviter l'incompatibilité avec `vue-tsc` rencontrée sur la version majeure suivante.
 
 `npm run build` exécute d'abord `vue-tsc` puis le build Vite. `npm test` lance Vitest en mode non interactif.
 
