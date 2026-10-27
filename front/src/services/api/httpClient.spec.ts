@@ -2,7 +2,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ApiError, apiRequest } from './httpClient'
 
 describe('apiRequest', () => {
-  afterEach(() => vi.restoreAllMocks())
+  afterEach(() => {
+    // Les stubs globaux de fetch doivent être retirés entre les cas de test.
+    vi.unstubAllGlobals()
+    vi.restoreAllMocks()
+  })
 
   it('parse la réponse JSON en cas de succès', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: 42 }), {
