@@ -20,6 +20,7 @@ const machineACafeId = ref<number | null>(null)
 const reglageBroyeur = ref(1)
 const reglageIntensite = ref(1)
 const loading = ref(true)
+const loadFailed = ref(false)
 const submitting = ref(false)
 const errorMessage = ref('')
 const success = ref(false)
@@ -29,23 +30,30 @@ const success = ref(false)
  * la règle de validation entre le bouton et la méthode de soumission.
  */
 const canSubmit = computed(() =>
-  cafeId.value !== null &&
-  machineACafeId.value !== null &&
-  reglageBroyeur.value > 0 &&
-  reglageIntensite.value > 0 &&
+  !loading.value &&
+  !loadFailed.value &&
+  coffees.value.some(coffee => coffee.id === cafeId.value) &&
+  machines.value.some(machine => machine.id === machineACafeId.value) &&
+  Number.isInteger(reglageBroyeur.value) && reglageBroyeur.value >= 1 && reglageBroyeur.value <= 127 &&
+  Number.isInteger(reglageIntensite.value) && reglageIntensite.value >= 1 && reglageIntensite.value <= 127 &&
   !submitting.value
 )
 
 /** Charge en parallèle les deux référentiels nécessaires au formulaire. */
 async function loadReferences() {
   loading.value = true
+  loadFailed.value = false
   errorMessage.value = ''
+  // En cas de nouvelle tentative, ne pas réutiliser un référentiel partiellement chargé.
+  coffees.value = []
+  machines.value = []
   try {
     ;[coffees.value, machines.value] = await Promise.all([
       coffeeService.getAll(),
       machineService.getAll()
     ])
   } catch {
+    loadFailed.value = true
     errorMessage.value = 'Impossible de charger les cafés et les machines.'
   } finally {
     loading.value = false
@@ -90,12 +98,18 @@ async function submitConsumption() {
 
     <p v-if="loading" role="status">Chargement des cafés et machines…</p>
 
-    <div v-if="!loading && errorMessage && (!coffees.length || !machines.length)" role="alert">
+    <div v-else-if="loadFailed" class="feedback error" role="alert">
       <p>{{ errorMessage }}</p>
       <button type="button" @click="loadReferences">Réessayer le chargement</button>
     </div>
 
-    <form v-else-if="!loading" class="consumption-form" @submit.prevent="submitConsumption">
+    <div v-else-if="coffees.length === 0 || machines.length === 0" class="feedback" role="status">
+      <p>Il faut au moins un café et une machine pour enregistrer une dégustation.</p>
+      <p><RouterLink to="/cafes">Gérer les cafés</RouterLink> · <RouterLink to="/machines">Gérer les machines</RouterLink></p>
+      <button type="button" @click="loadReferences">Actualiser les listes</button>
+    </div>
+
+    <form v-else class="consumption-form" :aria-busy="submitting" @submit.prevent="submitConsumption">
       <label>
         Café
         <select v-model="cafeId" required>
@@ -119,7 +133,7 @@ async function submitConsumption() {
       <div class="settings-grid">
         <label>
           Réglage broyeur
-          <input v-model.number="reglageBroyeur" type="number" min="1" required />
+          <input v-model.number="reglageBroyeur" type="number" min="1" max="127" step="1" required />
         </label>
         <label>
           Intensité
