@@ -16,8 +16,7 @@ export class ApiError extends Error {
  */
 export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
   const method = options.method ?? 'GET'
-  console.debug(`[API] ${method} ${path}`)
-
+  // Pas de log sur chaque requête réussie : seules les erreurs sont diagnostiquées.
   try {
     const response = await fetch(`${API_BASE_URL}${path}`, {
       ...options,
