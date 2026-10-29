@@ -63,6 +63,7 @@ Le MVP couvre notamment :
 
 - `CDC_FRONT_MVP.md` : périmètre fonctionnel et UX ;
 - `ARCHITECTURE_FRONT_API.md` : conventions détaillées de la couche API ;
+- `docs/RECETTE_MVP.md` : procédure reproductible de recette navigateur avec Spring, clavier et responsive ;
 - `docs/` : décisions et documents Front complémentaires.
 
 ## Backend
@@ -90,7 +91,8 @@ cibler une API différente ; si elle désigne une autre origine, le serveur API
 doit autoriser explicitement les origines CORS correspondantes. La décision
 de déploiement est suivie dans l'issue #126, séparément du MVP local.
 
-La branche #111 a passé les tests Vitest (10/10) et le build TypeScript/Vite
-sur GitHub Actions le 27 octobre 2026 (commit `dd979a4`, run `40457518508`).
-Ces résultats automatisés ne valident pas le parcours réel avec Spring ni la
-revue visuelle sur téléphone, tablette et desktop : ces contrôles restent à faire.
+La dernière validation automatisée confirmée le 27 octobre 2026 a passé 15/15
+cas Vitest et le build TypeScript/Vite (commit `553b736`, run `40509287233`).
+Toute modification ultérieure doit être revérifiée dans GitHub Actions avant de
+revendiquer une validation. La recette avec Spring et la revue visuelle restent
+à effectuer selon `docs/RECETTE_MVP.md`.
