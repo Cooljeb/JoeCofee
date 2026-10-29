@@ -15,6 +15,14 @@ button:disabled { cursor: not-allowed; }
 a { color: #70452c; }
 a:hover { color: #4d2c19; }
 :focus-visible { outline: 3px solid #ad632a; outline-offset: 3px; }
+/* Le lien d'évitement est hors flux pour ne pas décaler les colonnes de la grille. */
+.skip-link {
+  position: fixed; z-index: 100; top: 1rem; left: 1rem;
+  transform: translateY(calc(-100% - 2rem));
+  padding: .75rem 1rem; border: 2px solid #70452c; border-radius: .6rem;
+  background: #fffaf5; color: #30251e; font-weight: 700;
+}
+.skip-link:focus { transform: none; }
 h1, h2, h3 { color: #30251e; line-height: 1.2; }
 p { line-height: 1.55; }
 .app-shell { display: grid; grid-template-columns: 250px minmax(0, 1fr); min-height: 100dvh; }
