@@ -9,6 +9,7 @@ describe('apiRequest', () => {
   })
 
   it('parse la réponse JSON en cas de succès', async () => {
+    const debugSpy = vi.spyOn(console, 'debug').mockImplementation(() => {})
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({ id: 42 }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
@@ -16,6 +17,7 @@ describe('apiRequest', () => {
 
     await expect(apiRequest<{ id: number }>('/test')).resolves.toEqual({ id: 42 })
     expect(fetch).toHaveBeenCalledOnce()
+    expect(debugSpy).not.toHaveBeenCalled()
   })
 
   it('accepte une réponse DELETE 204 sans tenter de parser du JSON', async () => {
@@ -31,11 +33,15 @@ describe('apiRequest', () => {
   })
 
   it('normalise une panne réseau sans exposer le détail technique aux vues', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('network down')))
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('token=never-log-me')))
 
     await expect(apiRequest('/test')).rejects.toMatchObject({
       status: 0,
       message: 'Backend indisponible'
     })
+    // Les logs doivent aider au diagnostic sans contenir l'exception réseau brute.
+    expect(errorSpy).toHaveBeenCalledOnce()
+    expect(errorSpy.mock.calls.flat().join(' ')).not.toContain('token=never-log-me')
   })
 })
