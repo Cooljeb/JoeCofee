@@ -14,6 +14,6 @@ describe('AppShell — navigation clavier', () => {
     expect(wrapper.get('a.skip-link').attributes('href')).toBe('#main-content')
     expect(wrapper.get('main#main-content').attributes('tabindex')).toBe('-1')
     expect(wrapper.get('main').text()).toContain('Bienvenue')
-    expect(wrapper.get('nav[aria-label="Navigation mobile"]').exists()).toBe(true)
+    expect(wrapper.find('nav[aria-label="Navigation mobile"]').exists()).toBe(true)
   })
 })
