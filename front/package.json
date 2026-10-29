@@ -18,7 +18,7 @@
     "@types/node": "latest",
     "@vue/test-utils": "latest",
     "jsdom": "latest",
-    "typescript": "latest",
+    "typescript": "~5.9.3",
     "vitest": "latest",
     "vue-tsc": "latest"
   }
