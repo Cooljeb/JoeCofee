@@ -13,7 +13,7 @@ vi.mock('../services/api/consumptionService', () => ({ consumptionService: { cre
 vi.mock('vue-router', () => ({ useRouter: () => ({ push: vi.fn() }) }))
 
 const coffee = {
-  id: 1, nomCafe: 'Moka', description: '', typeCafe: '', labelCafe: null,
+  id: 1, nomCafe: 'Moka', description: '', typeCafe: 'ARABICA' as const, labelCafe: null,
   commercant: 1, commercantNom: '', commercantType: ''
 }
 const machine = {
