@@ -25,6 +25,19 @@ jobs:
       # Passer à npm ci dès qu'un lockfile versionné est disponible.
       - name: Installer les dépendances
         run: npm install --no-audit --no-fund
+      # Temporaire : émettre le lockfile généré par npm pour le versionner dans la PR.
+      # Supprimer cette étape une fois front/package-lock.json ajouté.
+      - name: Extraire le lockfile généré (#111)
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs')
+          const lock = JSON.stringify(JSON.parse(fs.readFileSync('package-lock.json', 'utf8')))
+          console.log('JOE_LOCKFILE_BEGIN')
+          for (let i = 0; i < lock.length; i += 3000) {
+            console.log('JOE_LOCKFILE_PART:' + lock.slice(i, i + 3000))
+          }
+          console.log('JOE_LOCKFILE_END')
+          NODE
       - name: Tests Vitest
         run: npm test
       - name: Build TypeScript et Vite
