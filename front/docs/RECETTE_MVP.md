@@ -4,7 +4,7 @@ Cette recette complète Vitest et le build : elle vérifie **le vrai navigateur*
 
 ## Préparer l'environnement
 
-Prérequis : Java 21, Node.js 22 et npm, deux terminaux. Les commandes partent de la racine du dépôt. Le backend utilise SQLite (`back/data/joeCoffee.db`) : **sauvegarder la base avant les essais** et utiliser des données de test.
+Prérequis : Java 21, Node.js 22.22.2+ (ou 24.15+) et npm, deux terminaux. Les commandes partent de la racine du dépôt. Le backend utilise SQLite (`back/data/joeCoffee.db`) : **sauvegarder la base avant les essais** et utiliser des données de test.
 
 Terminal A (Spring) :
 
@@ -19,7 +19,7 @@ Terminal B (Vue) :
 
 ```bash
 cd front
-npm install
+npm ci
 npm test
 npm run build
 npm run dev
