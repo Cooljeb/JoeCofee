@@ -112,4 +112,36 @@ describe('NewConsumptionView — états du formulaire', () => {
     expect(wrapper.get('button[type="submit"]').attributes('disabled')).toBeUndefined()
   })
 
+
+  it('ne déclenche pas deux POST pendant une requête de création en cours', async () => {
+    let resolveCreation!: (value: {
+      codeConsommation: number
+      cafeId: number
+      machineACafeId: number
+      reglageBroyeur: number
+      reglageIntensite: number
+    }) => void
+    vi.mocked(consumptionService.create).mockImplementationOnce(() => new Promise(resolve => {
+      resolveCreation = resolve
+    }))
+    const wrapper = mountView()
+    await flushPromises()
+    const selects = wrapper.findAll('select')
+    await selects[0].setValue('1')
+    await selects[1].setValue('2')
+
+    // Le premier submit doit verrouiller le formulaire avant la réponse réseau.
+    await wrapper.get('form').trigger('submit')
+    await wrapper.get('form').trigger('submit')
+    expect(consumptionService.create).toHaveBeenCalledTimes(1)
+    expect(wrapper.get('button[type="submit"]').attributes('disabled')).toBeDefined()
+
+    resolveCreation({
+      codeConsommation: 9, cafeId: 1, machineACafeId: 2,
+      reglageBroyeur: 1, reglageIntensite: 1
+    })
+    await flushPromises()
+    expect(wrapper.text()).toContain('Consommation enregistrée')
+  })
+
 })
