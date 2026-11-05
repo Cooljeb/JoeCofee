@@ -76,6 +76,28 @@ describe('NewConsumptionView — états du formulaire', () => {
     await inputs[0].setValue('7')
     expect(wrapper.get('button[type="submit"]').attributes('disabled')).toBeUndefined()
   })
+  it('ne soumet jamais de réglages décimaux ou hors limites, même par événement submit', async () => {
+    const wrapper = mountView()
+    await flushPromises()
+    const selects = wrapper.findAll('select')
+    await selects[0].setValue('1')
+    await selects[1].setValue('2')
+    const inputs = wrapper.findAll('input[type="number"]')
+
+    // La validation doit rester côté script : un submit programmatique
+    // contourne le bouton désactivé et les contraintes HTML natives.
+    for (const invalid of ['0', '128', '1.5']) {
+      await inputs[0].setValue(invalid)
+      await wrapper.get('form').trigger('submit')
+    }
+    expect(consumptionService.create).not.toHaveBeenCalled()
+
+    await inputs[0].setValue('4')
+    await inputs[1].setValue('2.5')
+    await wrapper.get('form').trigger('submit')
+    expect(consumptionService.create).not.toHaveBeenCalled()
+  })
+
   it('envoie les réglages sélectionnés au service puis confirme la création', async () => {
     const wrapper = mountView()
     await flushPromises()
