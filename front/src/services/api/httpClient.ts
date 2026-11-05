@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api'
+// Par défaut, le navigateur appelle la même origine : Vite relaie /api vers Spring en développement.
+// En production, le serveur frontal doit router /api vers le backend.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
 
 /** Erreur normalisée : les vues n'ont pas à connaître les détails de fetch. */
 export class ApiError extends Error {
@@ -14,8 +16,7 @@ export class ApiError extends Error {
  */
 export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
   const method = options.method ?? 'GET'
-  console.debug(`[API] ${method} ${path}`)
-
+  // Pas de log sur chaque requête réussie : seules les erreurs sont diagnostiquées.
   try {
     const response = await fetch(`${API_BASE_URL}${path}`, {
       ...options,
@@ -32,7 +33,8 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
     return await response.json() as T
   } catch (error) {
     if (error instanceof ApiError) throw error
-    console.error(`[API] Backend indisponible pour ${method} ${path}`, error)
+    // Ne pas journaliser l'exception brute : son contenu peut exposer des détails réseau.
+    console.error(`[API] Échec réseau ou réponse invalide pour ${method} ${path}`)
     throw new ApiError(0, 'Backend indisponible')
   }
 }

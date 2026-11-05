@@ -14,6 +14,8 @@ const navigation = [
 
 <template>
   <div class="app-shell">
+    <!-- Le lien d’évitement devient visible au focus pour accéder directement au contenu au clavier. -->
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
     <aside class="desktop-nav" aria-label="Navigation principale">
       <RouterLink class="brand" to="/">JoeCoffee</RouterLink>
       <nav>
@@ -24,7 +26,7 @@ const navigation = [
       <RouterLink class="primary-action" to="/consommations/new">+ Nouvelle consommation</RouterLink>
     </aside>
 
-    <main class="app-content"><slot /></main>
+    <main id="main-content" class="app-content" tabindex="-1"><slot /></main>
 
     <!-- Sur téléphone la navigation descend au pouce au lieu de réduire la sidebar desktop. -->
     <nav class="mobile-nav" aria-label="Navigation mobile">
