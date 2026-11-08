@@ -62,6 +62,26 @@ describe('NewConsumptionView — états du formulaire', () => {
     expect(wrapper.find('form').exists()).toBe(true)
   })
 
+  it('recharge les deux référentiels après une erreur machine sans conserver de données partielles', async () => {
+    vi.mocked(machineService.getAll)
+      .mockRejectedValueOnce(new Error('machine indisponible'))
+      .mockResolvedValueOnce([machine])
+    const wrapper = mountView()
+    await flushPromises()
+
+    // Promise.all peut avoir déjà résolu les cafés : une erreur machine
+    // ne doit jamais afficher un formulaire avec des données incomplètes.
+    expect(wrapper.find('form').exists()).toBe(false)
+    expect(wrapper.get('[role="alert"]').text()).toContain('Impossible de charger')
+
+    await wrapper.get('button').trigger('click')
+    await flushPromises()
+
+    expect(coffeeService.getAll).toHaveBeenCalledTimes(2)
+    expect(machineService.getAll).toHaveBeenCalledTimes(2)
+    expect(wrapper.find('form').exists()).toBe(true)
+  })
+
   it('refuse un réglage hors de la plage Byte acceptée par le formulaire', async () => {
     const wrapper = mountView()
     await flushPromises()
