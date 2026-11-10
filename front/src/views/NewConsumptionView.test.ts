@@ -22,6 +22,31 @@ const machine = {
 }
 const mountView = () => mount(NewConsumptionView, {
   global: { stubs: { RouterLink: true } }
+  it('annule la redirection différée si la View est démontée après succès', async () => {
+    const wrapper = mountView()
+    await flushPromises()
+    const selects = wrapper.findAll('select')
+    await selects[0].setValue('1')
+    await selects[1].setValue('2')
+
+    // Les timers sont simulés seulement après le montage pour ne pas bloquer
+    // les promesses de chargement des référentiels.
+    vi.useFakeTimers()
+    try {
+      await wrapper.get('form').trigger('submit')
+      await Promise.resolve()
+      await wrapper.vm.$nextTick()
+      expect(wrapper.text()).toContain('Consommation enregistrée')
+
+      const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout')
+      wrapper.unmount()
+      expect(clearTimeoutSpy).toHaveBeenCalledOnce()
+      clearTimeoutSpy.mockRestore()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
 })
 
 describe('NewConsumptionView — états du formulaire', () => {
