@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { coffeeService } from '../services/api/coffeeService'
 import { machineService } from '../services/api/machineService'
@@ -24,6 +24,13 @@ const loadFailed = ref(false)
 const submitting = ref(false)
 const errorMessage = ref('')
 const success = ref(false)
+let navigationTimer: ReturnType<typeof setTimeout> | undefined
+
+// Une navigation différée appartient à cette View : si elle disparaît avant
+// l'expiration du délai, son ancien timer ne doit pas rediriger une autre page.
+onUnmounted(() => {
+  if (navigationTimer !== undefined) window.clearTimeout(navigationTimer)
+})
 
 /**
  * `computed` dérive une valeur de l'état existant. Ici il évite de dupliquer
@@ -80,7 +87,7 @@ async function submitConsumption() {
     success.value = true
 
     // Une courte confirmation garde un feedback visible avant d'afficher l'historique.
-    window.setTimeout(() => router.push('/consommations'), 650)
+    navigationTimer = window.setTimeout(() => router.push('/consommations'), 650)
   } catch {
     errorMessage.value = "La consommation n'a pas pu être enregistrée. Réessaie."
     submitting.value = false
