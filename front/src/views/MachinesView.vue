@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { machineService } from '../services/api/machineService'
 import { brandService } from '../services/api/brandService'
 import type { Machine, MachineInput } from '../types/machine'
@@ -23,13 +23,26 @@ function resetForm() {
  * Les référentiels sont chargés ensemble : l'écran a besoin des machines pour
  * la liste et des marques pour convertir le choix humain en `marqueId` attendu par Spring.
  */
-async function loadData() {
+/** MachineACafeDtoIn impose trois chaînes non vides et un marqueId existant. */
+const canSave = computed(() =>
+  !saving.value &&
+  form.nomCommercial.trim().length > 0 &&
+  form.referenceCommerciale.trim().length > 0 &&
+  form.description.trim().length > 0 &&
+  brands.value.some(brand => brand.id === form.marqueId)
+)
+
+async function loadData(): Promise<boolean> {
   loading.value = true
   errorMessage.value = ''
   try {
     ;[machines.value, brands.value] = await Promise.all([machineService.getAll(), brandService.getAll()])
+    return true
   } catch {
+    machines.value = []
+    brands.value = []
     errorMessage.value = 'Impossible de charger les machines ou les marques.'
+    return false
   } finally { loading.value = false }
 }
 
@@ -47,24 +60,30 @@ function editMachine(machine: Machine) {
 }
 
 async function saveMachine() {
-  if (!form.nomCommercial.trim() || form.marqueId <= 0 || saving.value) return
+  if (!canSave.value) return
   saving.value = true
   errorMessage.value = ''
   successMessage.value = ''
   try {
+    const action = editingId.value === null ? 'créée' : 'modifiée'
     if (editingId.value === null) await machineService.create({ ...form })
     else await machineService.update(editingId.value, { ...form })
-    successMessage.value = editingId.value === null ? 'Machine créée.' : 'Machine modifiée.'
     resetForm()
-    await loadData()
+    if (await loadData()) successMessage.value = `Machine ${action}.`
+    else errorMessage.value = `Machine ${action}, mais impossible d'actualiser la liste.`
   } catch { errorMessage.value = "L'enregistrement de la machine a échoué." }
   finally { saving.value = false }
 }
 
 async function removeMachine(machine: Machine) {
   if (!window.confirm(`Supprimer la machine « ${machine.nomCommercial} » ?`)) return
-  try { await machineService.remove(machine.id); successMessage.value = 'Machine supprimée.'; await loadData() }
-  catch { errorMessage.value = 'La suppression de la machine a échoué.' }
+  errorMessage.value = ''
+  successMessage.value = ''
+  try {
+    await machineService.remove(machine.id)
+    if (await loadData()) successMessage.value = 'Machine supprimée.'
+    else errorMessage.value = "Machine supprimée, mais impossible d'actualiser la liste."
+  } catch { errorMessage.value = 'La suppression de la machine a échoué.' }
 }
 
 onMounted(loadData)
@@ -76,12 +95,12 @@ onMounted(loadData)
     <form class="editor" @submit.prevent="saveMachine">
       <h2>{{ editingId === null ? 'Ajouter une machine' : 'Modifier la machine' }}</h2>
       <div class="form-grid">
-        <label>Nom commercial<input v-model.trim="form.nomCommercial" required /></label>
-        <label>Référence<input v-model.trim="form.referenceCommerciale" /></label>
-        <label>Marque<select v-model.number="form.marqueId" required><option :value="0" disabled>Choisir une marque</option><option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.marque }}</option></select></label>
-        <label class="wide">Description<textarea v-model.trim="form.description" rows="3" /></label>
+        <label>Nom commercial<input name="nomCommercial" v-model.trim="form.nomCommercial" required /></label>
+        <label>Référence<input name="referenceCommerciale" v-model.trim="form.referenceCommerciale" required /></label>
+        <label>Marque<select name="marqueId" v-model.number="form.marqueId" required><option :value="0" disabled>Choisir une marque</option><option v-for="brand in brands" :key="brand.id" :value="brand.id">{{ brand.marque }}</option></select></label>
+        <label class="wide">Description<textarea name="description" v-model.trim="form.description" rows="3" required /></label>
       </div>
-      <div class="actions"><button type="submit" :disabled="saving">{{ saving ? 'Enregistrement…' : (editingId === null ? 'Ajouter' : 'Enregistrer') }}</button><button v-if="editingId !== null" type="button" @click="resetForm">Annuler</button></div>
+      <div class="actions"><button type="submit" :disabled="!canSave">{{ saving ? 'Enregistrement…' : (editingId === null ? 'Ajouter' : 'Enregistrer') }}</button><button v-if="editingId !== null" type="button" @click="resetForm">Annuler</button></div>
     </form>
     <p v-if="successMessage" class="feedback" role="status">{{ successMessage }}</p>
     <div v-if="errorMessage" class="state-card" role="alert"><p>{{ errorMessage }}</p><button type="button" @click="loadData">Réessayer</button></div>

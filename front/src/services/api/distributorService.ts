@@ -1,13 +1,13 @@
-import { httpClient } from './httpClient'
+import { apiRequest } from './httpClient'
 import type { Distributor, DistributorInput } from '../../types/distributor'
 
 const endpoint = '/distributeurs'
 
 /** Point d'accès unique du Front au domaine Distributeur. */
 export const distributorService = {
-  getAll: () => httpClient.get<Distributor[]>(endpoint),
-  getById: (id: number) => httpClient.get<Distributor>(`${endpoint}/${id}`),
-  create: (payload: DistributorInput) => httpClient.post<Distributor>(endpoint, payload),
-  update: (id: number, payload: DistributorInput) => httpClient.put<Distributor>(`${endpoint}/${id}`, payload),
-  remove: (id: number) => httpClient.delete<void>(`${endpoint}/${id}`)
+  getAll: () => apiRequest<Distributor[]>(endpoint),
+  getById: (id: number) => apiRequest<Distributor>(`${endpoint}/${id}`),
+  create: (payload: DistributorInput) => apiRequest<Distributor>(endpoint, { method: 'POST', body: JSON.stringify(payload) }),
+  update: (id: number, payload: DistributorInput) => apiRequest<Distributor>(`${endpoint}/${id}`, { method: 'PUT', body: JSON.stringify(payload) }),
+  remove: (id: number) => apiRequest<void>(`${endpoint}/${id}`, { method: 'DELETE' })
 }
