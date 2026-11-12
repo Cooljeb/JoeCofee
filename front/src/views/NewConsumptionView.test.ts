@@ -22,6 +22,19 @@ const machine = {
 }
 const mountView = () => mount(NewConsumptionView, {
   global: { stubs: { RouterLink: true } }
+})
+
+describe('NewConsumptionView — états du formulaire', () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+    vi.mocked(coffeeService.getAll).mockResolvedValue([coffee])
+    vi.mocked(machineService.getAll).mockResolvedValue([machine])
+    vi.mocked(consumptionService.create).mockResolvedValue({
+      codeConsommation: 8, cafeId: 1, machineACafeId: 2,
+      reglageBroyeur: 4, reglageIntensite: 5
+    })
+  })
+
   it('annule la redirection différée si la View est démontée après succès', async () => {
     const wrapper = mountView()
     await flushPromises()
@@ -47,18 +60,6 @@ const mountView = () => mount(NewConsumptionView, {
     }
   })
 
-})
-
-describe('NewConsumptionView — états du formulaire', () => {
-  beforeEach(() => {
-    vi.resetAllMocks()
-    vi.mocked(coffeeService.getAll).mockResolvedValue([coffee])
-    vi.mocked(machineService.getAll).mockResolvedValue([machine])
-    vi.mocked(consumptionService.create).mockResolvedValue({
-      codeConsommation: 8, cafeId: 1, machineACafeId: 2,
-      reglageBroyeur: 4, reglageIntensite: 5
-    })
-  })
 
   it('guide vers les référentiels quand aucun café ni machine ne sont disponibles', async () => {
     vi.mocked(coffeeService.getAll).mockResolvedValue([])
